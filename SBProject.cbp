@@ -31,13 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="base62.c">
+		<Unit filename="src/base62.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="main.c">
+		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="maze62.h" />
+		<Unit filename="src/maze62.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

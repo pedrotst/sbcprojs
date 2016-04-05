@@ -31,6 +31,8 @@
 # Debug files
 *.dSYM/
 
+main
+
 # CodeBlocks files
 /bin/
 /obj/

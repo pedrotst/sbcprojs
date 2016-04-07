@@ -2,11 +2,23 @@
 
 #define OPT1(ac, av) (ac > 1 ? av[1][0] == '-' ? av[1][1] : '\0' : '\0')
 
-#define OPT2(ac, av) (ac > 2 ? av[2][0] == '-' ? av[2][1] : '\0' : '\0')
+#define OPT2(ac, av) (ac > 2 ? av[2][0] == '-' ? av[2][3] : '\0' : '\0')
 
 
 // Mensagens de erro.
 char *err[] = { "\nSintaxe errada. Utilize a opção -h para obter ajuda.\n\n"};
+
+char *help = "\nSintaxe:\n \
+main { -e | -d } { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saída}\n\
+\n\
+-e O arquivo será codificado (binário para texto).\n\
+-d O arquivo será decodificado (texto para binário).\n\
+\n\
+-b62 A base utilizada será a base 62.\n\
+-b64 A base utilizada será a base 64.\n\
+-b85 A base utilizada será a base 85.\n\
+-b91 A base utilizada será a base 91.\n\
+\n";
 
 int main(int argc, char **argv){
     char opt1 = '\0', opt2 = '\0';
@@ -15,32 +27,64 @@ int main(int argc, char **argv){
     opt2 = OPT2(argc, argv);
     
     switch (opt1) {
-        case '\0':
-            printf("%s", err[0]);
-            break;
+        // Ajuda.
         case 'h':
-            printf("Sintaxe:\n \
-main { -b62 | -b64 | -b85 | -b91 } { -e | -d } {arquivo de entrada} {arquivo de saída}\n\
-\n\
--b62 A base utilizada será a base 62.\n\
--b64 A base utilizada será a base 64.\n\
--b85 A base utilizada será a base 85.\n\
--b91 A base utilizada será a base 91.\n\
-\n\
--e O arquivo será codificado (binário para texto).\n\
--d O arquivo será decodificado (texto para binário).\n\
-\n");
+            printf("%s", help);
             break;
-        case 64:
+        
+        // Codificar.
+        case 'e':
             switch (opt2) {
-                case 'e':
+                // Base 62.
+                case '2':
                     break;
-                case 'd':
+                
+                // Base 64.
+                case '4':
+                    printf("dsadasda");
+                    break;
+                    
+                // Base 85.
+                case '5':
+                    break;
+                
+                // Base 91.
+                case '1':
+                    break;
+                    
+                default:
+                    printf("%s", err[0]);
+                    break;
+            }
+            break;
+            
+        // Decodificar.
+        case 'd':
+            switch (opt2) {
+                // Base 62.
+                case '2':
+                    break;
+                    
+                // Base 64.
+                case '4':
+                    break;
+                    
+                // Base 85.
+                case '5':
+                    break;
+                    
+                // Base 91.
+                case '1':
+                    break;
+                    
+                default:
+                    printf("%s", err[0]);
                     break;
             }
             break;
             
         default:
+            printf("%s", err[0]);
             break;
     }
 

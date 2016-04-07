@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Brief: codifica um arquivo de entrada em base 64.
 //
@@ -36,7 +37,7 @@
 // Parâmetros:
 // *in : nome do arquivo de entrada.
 // *out : nome do arquivo de saída.
-void encode(char *in, char *out);
+void encode64(char *in, char *out);
 
 // Brief: decodifica um arquivo de entrada em base 64.
 //
@@ -44,6 +45,6 @@ void encode(char *in, char *out);
 // Parâmetros:
 // *in : nome do arquivo de entrada.
 // *out : nome do arquivo de saída.
-void decode(char *in, char *out);
+void decode64(char *in, char *out);
 
 #endif /* base64_h */

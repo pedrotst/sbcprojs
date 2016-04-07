@@ -1,4 +1,5 @@
 #include "base62.h"
+#include "base64.h"
 
 #define OPT1(ac, av) (ac > 1 ? av[1][0] == '-' ? av[1][1] : '\0' : '\0')
 
@@ -6,7 +7,8 @@
 
 
 // Mensagens de erro.
-char *err[] = { "\nSintaxe errada. Utilize a opção -h para obter ajuda.\n\n"};
+char *err[] = { "\nSintaxe errada. Utilize a opção -h para obter ajuda.\n\n",
+                "\nBase não implementada. Utilize a opção -h para obter ajuda.\n\n"};
 
 char *help = "\nSintaxe:\n \
 main { -e | -d } { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saída}\n\
@@ -41,7 +43,7 @@ int main(int argc, char **argv){
                 
                 // Base 64.
                 case '4':
-                    printf("dsadasda");
+                    encode64(argv[3], argv[4]);
                     break;
                     
                 // Base 85.
@@ -53,7 +55,7 @@ int main(int argc, char **argv){
                     break;
                     
                 default:
-                    printf("%s", err[0]);
+                    printf("%s", err[1]);
                     break;
             }
             break;
@@ -67,6 +69,7 @@ int main(int argc, char **argv){
                     
                 // Base 64.
                 case '4':
+                    decode64(argv[3], argv[4]);
                     break;
                     
                 // Base 85.
@@ -78,7 +81,7 @@ int main(int argc, char **argv){
                     break;
                     
                 default:
-                    printf("%s", err[0]);
+                    printf("%s", err[1]);
                     break;
             }
             break;

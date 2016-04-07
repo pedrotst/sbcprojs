@@ -10,18 +10,28 @@
 
 char b64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-void encode(char *in, char *out) {
+int getIndex(char c) {
+    char *p = NULL;
+    int index = 0;
+    
+    p = strchr(b64, c);
+    index = (int)(b64 - p);
+    
+    return index;
+}
+
+void encode64(char *in, char *out) {
     FILE *fp_in = NULL, *fp_out = NULL;
     char c = !EOF, inBytes[3], outBytes[4];
     int i = 0;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
-        printf("Erro ao abrir o arquivo de entrada.");
+        printf("\nErro ao abrir o arquivo de entrada.\n\n");
         exit(0);
     }
     
     if ((fp_out = fopen(out, "wb")) == NULL) {
-        printf("Erro ao abrir o arquivo de saída.");
+        printf("\nErro ao abrir o arquivo de saída.\n\n");
         exit(0);
     }
     
@@ -43,23 +53,23 @@ void encode(char *in, char *out) {
         }
         
         for (i = 0; i < 4; i++) {
-            putc(c, fp_out);
+            putc(outBytes[i], fp_out);
         }
     }
 }
 
-void decode(char *in, char *out) {
+void decode64(char *in, char *out) {
     FILE *fp_in = NULL, *fp_out = NULL;
     char c = !EOF, outBytes[3], inBytes[4];
     int i = 0;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
-        printf("Erro ao abrir o arquivo de entrada.");
+        printf("\nErro ao abrir o arquivo de entrada.\n\n");
         exit(0);
     }
     
     if ((fp_out = fopen(out, "wb")) == NULL) {
-        printf("Erro ao abrir o arquivo de saída.");
+        printf("\nErro ao abrir o arquivo de saída.\n\n");
         exit(0);
     }
 }

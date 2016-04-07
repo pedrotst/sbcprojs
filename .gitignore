@@ -38,3 +38,6 @@ main
 /obj/
 *.layout
 *.depend
+
+# Arquivos de teste
+/arq/

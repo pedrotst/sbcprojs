@@ -1,5 +1,6 @@
 #include "base62.h"
 #include "base64.h"
+#include "base91.h"
 
 #define OPT1(ac, av) (ac > 1 ? av[1][0] == '-' ? av[1][1] : '\0' : '\0')
 

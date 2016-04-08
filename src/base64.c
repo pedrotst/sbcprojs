@@ -35,9 +35,12 @@ void encode64(char *in, char *out) {
         exit(0);
     }
     
-    while (c != EOF) {
-        for (i = 0; (c = getc(fp_in)) != EOF && i < 3; i++) {
-            inBytes[i] = c;
+    while (feof(fp_in) == 0) {
+        for (i = 0; i < 3; i++) {
+            if ((c = getc(fp_in), feof(fp_in)) == 0)
+                inBytes[i] = c;
+            else
+                break;
         }
         
         outBytes[0] = outBytes[1] = outBytes[2] = outBytes[3] = 0;
@@ -48,14 +51,13 @@ void encode64(char *in, char *out) {
             outBytes[3] = i > 2 ? b64[inBytes[2] & 0b00111111] : '=';
         }
         
-        else if (i == 2) {
-            
-        }
-        
         for (i = 0; i < 4; i++) {
             putc(outBytes[i], fp_out);
         }
     }
+    
+    fclose(fp_in);
+    fclose(fp_out);
 }
 
 void decode64(char *in, char *out) {

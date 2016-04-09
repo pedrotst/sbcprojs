@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-e -base91 teste.txt saida.txt" />
+				<Option parameters="-e -b91 Frank as an Art Collector.mp4 Frank as an Art Collector.b91" />
 				<Compiler>
 					<Add option="-std=c99" />
 				</Compiler>
@@ -38,6 +38,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/base64.h" />
+		<Unit filename="src/base85.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/base85.h" />
 		<Unit filename="src/base91.c">
 			<Option compilerVar="CC" />
 		</Unit>

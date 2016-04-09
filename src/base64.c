@@ -25,7 +25,7 @@ char getIndex(char c) {
 void encode64(char *in, char *out) {
     FILE *fp_in = NULL, *fp_out = NULL;
     char c = !EOF, inBytes[3], outBytes[4];
-    int i = 0;
+    int i = 0, charsLine = 0;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");
@@ -55,6 +55,12 @@ void encode64(char *in, char *out) {
         
         for (i = 0; i < 4; i++) {
             putc(outBytes[i], fp_out);
+            charsLine++;
+        }
+        
+        if ( charsLine == 76) {
+            putc('\n', fp_out);
+            charsLine = 0;
         }
     }
     
@@ -65,7 +71,7 @@ void encode64(char *in, char *out) {
 void decode64(char *in, char *out) {
     FILE *fp_in = NULL, *fp_out = NULL;
     char c = !EOF, outBytes[3], inBytes[4];
-    int i = 0, j = 0, invalidBytes = 0;
+    int i = 0, j = 0, invalidBytes = 0, charsLine = 0;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");
@@ -79,10 +85,17 @@ void decode64(char *in, char *out) {
 
     while (feof(fp_in) == 0) {
         for (i = 0; i < 4; i++) {
-            if ((c = getc(fp_in), feof(fp_in)) == 0)
+            if ((c = getc(fp_in), feof(fp_in)) == 0) {
                 inBytes[i] = c;
+                charsLine++;
+            }
             else
                 break;
+        }
+        
+        if (charsLine == 76) {
+            (void)getc(fp_in);
+            charsLine = 0;
         }
         
         //Passando os inbytes de char para binário.

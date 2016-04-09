@@ -9,20 +9,20 @@
 
 
 // Mensagens de erro.
-char *err[] = { "\nSintaxe errada. Utilize a opção -h para obter ajuda.\n\n",
-                "\nBase não implementada. Utilize a opção -h para obter ajuda.\n\n"};
+char *err[] = { "\nSintaxe errada. Utilize a opcao -h para obter ajuda.\n\n",
+                "\nBase nao implementada. Utilize a opcao -h para obter ajuda.\n\n"};
 
 char *help = "\nSintaxe:\n \
-main { -e | -d | -h} { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saída}\n\
+main { -e | -d | -h} { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saida}\n\
 \n\
--e O arquivo será codificado (binário para texto).\n\
--d O arquivo será decodificado (texto para binário).\n\
+-e O arquivo sera codificado (binario para texto).\n\
+-d O arquivo sera decodificado (texto para binario).\n\
 -h Menu de ajuda.\n\
 \n\
--b62 A base utilizada será a base 62.\n\
--b64 A base utilizada será a base 64.\n\
--b85 A base utilizada será a base 85.\n\
--b91 A base utilizada será a base 91.\n\
+-b62 A base utilizada sera a base 62.\n\
+-b64 A base utilizada sera a base 64.\n\
+-b85 A base utilizada sera a base 85.\n\
+-b91 A base utilizada sera a base 91.\n\
 \n";
 
 int main(int argc, char **argv){

@@ -13,11 +13,11 @@ char b64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 char getIndex(char c) {
     char *p = NULL, index = 0;
     
+    if (c == '=')
+        return -1;
+    
     p = strchr(b64, c);
     index = (char)(p - b64);
-    
-    if (p == NULL)
-        return -1;
     
     return index;
 }
@@ -103,10 +103,11 @@ void decode64(char *in, char *out) {
             outBytes[0] = (inBytes[0] << 2 & 0b11111100) | (inBytes[1] >> 4 & 0b00000011);
             outBytes[1] = (inBytes[1] << 4 & 0b11110000) | (inBytes[2] >> 2 & 0b00001111);
             outBytes[2] = (inBytes[2] << 6 & 0b11000000) | (inBytes[3] & 0b00111111);
-        }
         
-        for (i = 0; i < 3 - invalidBytes; i++) {
-            putc(outBytes[i], fp_out);
+            for (i = 0; i < 3 - invalidBytes; i++) {
+                putc(outBytes[i], fp_out);
+        
+            }
         }
     }
 }

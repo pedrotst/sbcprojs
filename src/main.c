@@ -80,6 +80,7 @@ int main(int argc, char **argv){
 
                 // Base 91.
                 case '1':
+                    decode91(argv[3], argv[4]);
                     break;
 
                 default:

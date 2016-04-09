@@ -1,6 +1,8 @@
 #ifndef BASE64
 #define BASE64
 
+int get_bit(char c, int bit_n);
+ 
 // Parâmetros:
 // *in : nome do arquivo de entrada.
 // *out : nome do arquivo de saída.

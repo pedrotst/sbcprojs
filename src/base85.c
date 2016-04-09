@@ -7,7 +7,7 @@ void encode85(char *in, char *out)
 {
 	
     FILE *fp_in = NULL, *fp_out = NULL;
-    char c = !EOF, inBytes[3];
+    char c = !EOF, inBytes[4];
     int i = 0 , aux;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
@@ -55,7 +55,7 @@ void decode85(char *in, char *out)
 {
 	
 	FILE *fp_in = NULL, *fp_out = NULL;
-    char c = !EOF, inBytes[4];
+    char c = !EOF, inBytes[5];
     int i = 0 , j=0 , aux;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {

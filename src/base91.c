@@ -1,21 +1,22 @@
 #include "base91.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int get_bit(char c, int bit_n){
     return (c >> bit_n) & 1;
 }
 
-static char *ENCODING_TABLE= 
+char ENCODING_TABLE[91] = 
   {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
   'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
   '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '#', '$',
-  '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
+	  '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
   '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~', '"'};
-
-static int *DECODE_TABLE = 
+/*
+int DECODE_TABLE[92] = 
   {91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91,
   91, 62, 90, 63, 64, 65, 66, 91, 67, 68, 69, 70, 71, 91, 72, 73,
   52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 74, 75, 76, 77, 78, 79,
@@ -31,6 +32,7 @@ static int *DECODE_TABLE =
   91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91,
   91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91,
   91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91};
+*/
 
 void encode91(char *in, char *out) {
     FILE *fp_in = NULL, *fp_out = NULL;
@@ -43,11 +45,52 @@ void encode91(char *in, char *out) {
         return;
     }
 
-    if ((fp_out = fopen(out, "wb")) == NULL) {
+    if ((fp_out = fopen(out, "w")) == NULL) {
         printf("\nErro ao abrir o arquivo de saída.\n\n");
         return;
     }
 
+    char *buffer;
+    long filelen;
+    fseek(fp_in, 0, SEEK_END);
+    filelen = ftell(fp_in);
+    rewind(fp_in);
+    buffer = (char *) malloc((filelen+1)*sizeof(char));
+    fread(buffer, filelen, 1, fp_in);
+    buffer[filelen] = '\0';
+    printf("%s", buffer);
+
+    int ebq=0, en=0, ev=0; 
+
+    for(i=0; i<filelen; ++i){
+        ebq |= (buffer[i] & 255) << en;
+        en += 8;
+        if(en > 13){
+            ev = ebq & 8191;
+            if(ev > 88){
+                ebq >>= 13;
+                en -= 13;
+            } else {
+                ev = ebq & 16383;
+                ebq >>= 14;
+                en -= 14;
+            }
+            c1 = ENCODING_TABLE[(int)ev/91];
+            c2 = ENCODING_TABLE[(int)ev%91];
+            fprintf(fp_out, "%c%c", c1, c2);
+        }
+    }
+    if(en > 0){
+        fprintf(fp_out, "%c", ENCODING_TABLE[ebq%91]);
+        if(en > 7 || ebq > 90){
+            fprintf(fp_out, "%c", ENCODING_TABLE[ebq/91]);
+        }
+    }
+           
+
+
+
+    /*    printf("%s\n", out);
 
     c1 = fgetc(fp_in);
     c2 = fgetc(fp_in);
@@ -65,7 +108,15 @@ void encode91(char *in, char *out) {
     printf("%d\n", c1); 
     printf("%d\n", c2); 
 
-/*
+    c1 = ENCODING_TABLE[(int)b13_bits/91];
+    c2 = ENCODING_TABLE[(int)b13_bits%91];
+    printf("%c\n", c1);
+    printf("%c\n", c2);
+    fprintf(fp_out, "%c%c", c1, c2);
+
+   /* fwrite(fp_out, 1, c2);
+    
+    
     printf("%d\n", c >> 3 & 1);
     for(i = 0; i < 8; i++){
         c2 = get_bit(c, i); 

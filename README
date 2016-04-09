@@ -1,3 +1,0 @@
-Caso queira utilizar o codeblocks abra o arquivo SBProject.cbp e gg
-Caso queira compilar na mão, os arquivos devem ser colocados em src e o programa gerado estará na pasta raiz com o nome main (esta main também foi copiada na pasta bin para manter concordância com o codeblocks com o nome SBProject)
-Quem for compilar utilizando o makefile deve criar as pastas ./obj/Debug/src/ e ./bin/Debug/SBProject localmente.

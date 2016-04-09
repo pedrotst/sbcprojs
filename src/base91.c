@@ -36,7 +36,7 @@ int DECODE_TABLE[92] =
 
 void encode91(char *in, char *out) {
     FILE *fp_in = NULL, *fp_out = NULL;
-    char c1, c2;
+    char c1, c2, c;
     int b13_bits, remainder;
     int i = 0;
 
@@ -55,15 +55,16 @@ void encode91(char *in, char *out) {
     fseek(fp_in, 0, SEEK_END);
     filelen = ftell(fp_in);
     rewind(fp_in);
-    buffer = (char *) malloc((filelen+1)*sizeof(char));
+    /*buffer = (char *) malloc((filelen+1)*sizeof(char));
     fread(buffer, filelen, 1, fp_in);
     buffer[filelen] = '\0';
     printf("%s", buffer);
-
+*/
     int ebq=0, en=0, ev=0; 
 
     for(i=0; i<filelen; ++i){
-        ebq |= (buffer[i] & 255) << en;
+        c = fgetc(fp_in);
+        ebq |= (c & 255) << en;
         en += 8;
         if(en > 13){
             ev = ebq & 8191;

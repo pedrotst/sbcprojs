@@ -16,7 +16,7 @@ base64.o:
 
 base91.o:
 	$(CC) $(CFLAGS) $(SOURCE)/base91.h $(SOURCE)/base91.c -c
-	
+
 moveobj:
 	mv ./*.o ./obj/Debug/src/
 

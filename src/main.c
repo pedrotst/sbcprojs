@@ -1,5 +1,6 @@
 #include "base62.h"
 #include "base64.h"
+#include "base85.h"
 #include "base91.h"
 
 #define OPT1(ac, av) (ac > 1 ? av[1][0] == '-' ? av[1][1] : '\0' : '\0')
@@ -8,19 +9,20 @@
 
 
 // Mensagens de erro.
-char *err[] = { "\nSintaxe errada. Utilize a op√ß√£o -h para obter ajuda.\n\n",
-                "\nBase n√£o implementada. Utilize a op√ß√£o -h para obter ajuda.\n\n"};
+char *err[] = { "\nSintaxe errada. Utilize a opÁ„o -h para obter ajuda.\n\n",
+                "\nBase n„o implementada. Utilize a opÁ„o -h para obter ajuda.\n\n"};
 
 char *help = "\nSintaxe:\n \
-main { -e | -d } { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de sa√≠da}\n\
+main { -e | -d | -h} { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saÌda}\n\
 \n\
--e O arquivo ser√° codificado (bin√°rio para texto).\n\
--d O arquivo ser√° decodificado (texto para bin√°rio).\n\
+-e O arquivo ser· codificado (bin·rio para texto).\n\
+-d O arquivo ser· decodificado (texto para bin·rio).\n\
+-h Menu de ajuda.\n\
 \n\
--b62 A base utilizada ser√° a base 62.\n\
--b64 A base utilizada ser√° a base 64.\n\
--b85 A base utilizada ser√° a base 85.\n\
--b91 A base utilizada ser√° a base 91.\n\
+-b62 A base utilizada ser· a base 62.\n\
+-b64 A base utilizada ser· a base 64.\n\
+-b85 A base utilizada ser· a base 85.\n\
+-b91 A base utilizada ser· a base 91.\n\
 \n";
 
 int main(int argc, char **argv){
@@ -49,6 +51,7 @@ int main(int argc, char **argv){
 
                 // Base 85.
                 case '5':
+                    encode85(argv[3], argv[4]);
                     break;
 
                 // Base 91.
@@ -76,6 +79,7 @@ int main(int argc, char **argv){
 
                 // Base 85.
                 case '5':
+                    decode85(argv[3], argv[4]);
                     break;
 
                 // Base 91.

@@ -82,7 +82,6 @@ void encode91(char *in, char *out) {
 
 
 
-    printf("Codificado com Sucesso! Parabens\n");
     fclose(fp_in);
     fclose(fp_out);
 }
@@ -156,5 +155,4 @@ void decode91(char *in, char *out){
     fclose(fp_in);
     fclose(fp_out);
 
-    printf("Decodificado com sucesso!\n");
 }

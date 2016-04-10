@@ -20,31 +20,23 @@
  */
 #include "bib.h"
 
-// checa se uma das opções definidas foi escolhida
-uint8_t existe_opcao(char opcao){
-    if(opcao != 'e' && opcao != 'd' && opcao != 'h'){
-        return 1;
-    }
-    return 0;
-}
-
 // checa se uma das bases definidas foi escolhida
-uint8_t existe_base(char base){
-    if(base != '2' && base != '4' && base != '5' && base != '1'){
+int existe_opcao(char opt){
+    if(opt == '2' || opt == '4' || opt == '3' || opt == '1'){
         return 1;
     }
     return 0;
 }
 
 // checa se um arquivo existe
-uint8_t existe_arquivo(const char *nome_arquivo){
+int existe_arquivo(const char *nome_arquivo){
     FILE *pt_arquivo;
 
     if(pt_arquivo = fopen(nome_arquivo, "r")){
         fclose(pt_arquivo);
-        return 0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 

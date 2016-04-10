@@ -1,13 +1,26 @@
+/*
+ *  Universidade de Brasília
+ *  Instituto de Ciencias Exatas
+ *  Departamento de Ciência da Computação
+ *
+ *  Software Básico - Turma A - 1/2016
+ *
+ *  Codificadores Binários
+ *
+ *  Grupo 3:
+ *      - Carlos Joel Tavares da Silva  13/0007293
+ *      - Felipe Barreto Fernandes      09/0112831
+ *      - Felipe Borges Albuquerque     09/93972
+ *      - Géssica Neves Sodré da Silva  11/0146115
+ *      - Pedro da Costa Abreu Júnior   11/0018800
+ *
+ *  Arquivo fonte "base91.c"
+ *
+ *  Copyright © 2016 UnB. All rights reserved.
+ */
 #include "base91.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-int get_bit(char c, int bit_n){
-    return (c >> bit_n) & 1;
-}
-
-char ENCODING_TABLE[91] = 
+char ENCODING_TABLE[91] =
   {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
   'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -39,7 +52,7 @@ void encode91(char *in, char *out) {
     fseek(fp_in, 0, SEEK_END);
     filelen = ftell(fp_in);
     rewind(fp_in);
-    int ebq=0, en=0, ev=0; 
+    int ebq=0, en=0, ev=0;
 
     for(i=0; i<filelen; ++i){
         c = fgetc(fp_in);
@@ -66,7 +79,7 @@ void encode91(char *in, char *out) {
             fprintf(fp_out, "%c", ENCODING_TABLE[ebq/91]);
         }
     }
-           
+
 
 
     printf("Codificado com Sucesso! Parabens\n");

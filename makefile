@@ -5,8 +5,8 @@ OBJ = ./obj/Debug/src
 
 all: main movemain
 
-main: base62.o base64.o base85.o base91.o moveobj
-	$(CC) $(CFLAGS) -o main $(SOURCE)/main.c $(OBJ)/base62.o $(OBJ)/base64.o $(OBJ)/base85.o $(OBJ)/base91.o
+main: base62.o base64.o base85.o base91.o bib.o moveobj
+	$(CC) $(CFLAGS) -o main $(SOURCE)/main.c $(OBJ)/base62.o $(OBJ)/base64.o $(OBJ)/base85.o $(OBJ)/base91.o $(OBJ)/bib.o
 
 base62.o: 
 	$(CC) $(CFLAGS) $(SOURCE)/base62.h $(SOURCE)/base62.c -c
@@ -19,6 +19,9 @@ base85.o:
 
 base91.o:
 	$(CC) $(CFLAGS) $(SOURCE)/base91.h $(SOURCE)/base91.c -c
+    
+bib.o:
+	$(CC) $(CFLAGS) $(SOURCE)/bib.h $(SOURCE)/bib.c -c
 
 moveobj:
 	mv ./*.o ./obj/Debug/src/

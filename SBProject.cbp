@@ -46,6 +46,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/base91.h" />
+		<Unit filename="src/bib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bib.h" />
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>

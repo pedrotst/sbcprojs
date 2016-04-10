@@ -31,7 +31,7 @@
 //            2 - base62
 //            3 - base64
 //            5 - base85
-int existe_base(char opt);
+int existe_opcao(char opt);
 
 // Descrição: checa se um arquivo existe a partir da sua localização/nome
 // Parâmetros:

@@ -26,7 +26,7 @@ void encode85(char *in, char *out)
     FILE *fp_in = NULL, *fp_out = NULL;
     char  outBytes[4];
     int i = 0 ,  contAux = 0;
-    uint32_t aux, c = !EOF, inBytes[3] ;
+    unsigned int aux, c = !EOF, inBytes[3] ;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");

@@ -127,53 +127,57 @@ int main(int argc, char **argv){
     char op = '\0', base = '\0';
     char arq_entrada[20], arq_saida[20];
     /* Se os valores forem passados as variáveis serão inicializadas */
-    if(argc == 5){
-        op = OPT1(argc, argv);
-        base = OPT2(argc, argv);
-        strcpy(arq_entrada, argv[3]);
-        strcpy(arq_saida, argv[4]);
-    }
-    /* Os parâmetros serão solicitados novamente*/
-    else{
-        /* Caso argc seja maior que 1, o usuário passou os parâmetros, mas de forma incorreta*/
-        printf("Bem Vindo ao programa de conversoes do Grupo 3!\n");
-        printf("E antes que voce pergunte, nao, nao somos Universal\n");
+    while(1){
+        if(argc == 5){
+            op = OPT1(argc, argv);
+            base = OPT2(argc, argv);
+            strcpy(arq_entrada, argv[3]);
+            strcpy(arq_saida, argv[4]);
+        }
+        /* Os parâmetros serão solicitados novamente*/
+        else{
+            /* Caso argc seja maior que 1, o usuário passou os parâmetros, mas de forma incorreta*/
+            printf("Bem Vindo ao programa de conversoes do Grupo 3!\n");
+            printf("E antes que voce pergunte, nao, nao somos Universal\n");
 
-		/* Pede a base a ser utilizada para realizar a operação*/
-		do{
-            printf("\nInforme a base que deseja utilizar.\n");
-            printf("\n1 - base91\n2 - base62\n3 - base64 \n4 - base85\n");
-            scanf("%c", &base);
-            getchar();
-            //while(getchar() != '\n');
-        }while(!existe_opcao(base));
+            /* Pede a base a ser utilizada para realizar a operação*/
+            do{
+                printf("\nInforme a base que deseja utilizar.\n");
+                printf("\n1 - base91\n2 - base62\n3 - base64 \n4 - base85\n9- Sair!\n");
+                if(base == '9'){
+                    printf("Tchau! Au revoir! So Long! Arrivederci");
+                    return 0;
+                }
+                scanf("%c", &base);
+                getchar();
+                //while(getchar() != '\n');
+            }while(!existe_opcao(base));
 
 
-		/* Pede pela operação que deseja realizar*/
-		do{
-            printf("\nInforme a operacao que deseja realizar. \n1- encoding \n2- decoding\n");
-            scanf("%c", &op);
-            getchar();
-            //getchar();
-        }while(op != '1' &&  op!= '2');
+            /* Pede pela operação que deseja realizar*/
+            do{
+                printf("\nInforme a operacao que deseja realizar. \n1- encoding \n2- decoding\n");
+                scanf("%c", &op);
+                getchar();
+                //getchar();
+            }while(op != '1' &&  op!= '2');
 
-		/* Pede pelo arquivo de entrada a ser codificado ou decodificado*/
-        printf("\nInforme o nome do arquivo de entrada: ");
-        scanf("%s", &arq_entrada);
-        printf("%s", arq_entrada);
-		while(!existe_arquivo(arq_entrada)){
-            printf("\nArquivo informado nao existe! Tente novamente ");
-            printf("\nInforme o nome do arquivo que de entrada: ");
+            /* Pede pelo arquivo de entrada a ser codificado ou decodificado*/
+            printf("\nInforme o nome do arquivo de entrada: ");
             scanf("%s", &arq_entrada);
-		}
+            while(!existe_arquivo(arq_entrada)){
+                printf("\nArquivo informado nao existe! Tente novamente ");
+                printf("\nInforme o nome do arquivo que de entrada: ");
+                scanf("%s", &arq_entrada);
+            }
 
-        /* Se não houver arquivo de saída, será criado em uma saída padrão*/
+            /* Se não houver arquivo de saída, será criado em uma saída padrão*/
 
-        printf("\nInforme o nome do arquivo de saida: ");
-        scanf("%s", &arq_saida);
+            printf("\nInforme o nome do arquivo de saida: ");
+            scanf("%s", &arq_saida);
+        }
+
+        conversor(op, base, arq_entrada, arq_saida);
     }
-
-    conversor(op, base, arq_entrada, arq_saida);
-
     return 0;
 }

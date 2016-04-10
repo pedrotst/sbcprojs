@@ -164,17 +164,17 @@ int main(int argc, char **argv){
 
             /* Pede pelo arquivo de entrada a ser codificado ou decodificado*/
             printf("\nInforme o nome do arquivo de entrada: ");
-            scanf("%s", &arq_entrada);
+            scanf("%s", arq_entrada);
             while(!existe_arquivo(arq_entrada)){
                 printf("\nArquivo informado nao existe! Tente novamente ");
                 printf("\nInforme o nome do arquivo que de entrada: ");
-                scanf("%s", &arq_entrada);
+                scanf("%s", arq_entrada);
             }
 
             /* Se não houver arquivo de saída, será criado em uma saída padrão*/
 
             printf("\nInforme o nome do arquivo de saida: ");
-            scanf("%s", &arq_saida);
+            scanf("%s", arq_saida);
         }
 
         conversor(op, base, arq_entrada, arq_saida);

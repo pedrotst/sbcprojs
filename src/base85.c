@@ -20,52 +20,61 @@
  */
 #include "base85.h"
 
-void encode85(char *in, char *out)
+void encode85(char *in, char *out) 
 {
-
+	
     FILE *fp_in = NULL, *fp_out = NULL;
-    char c = !EOF, inBytes[4];
-    int i = 0 , aux;
-
+    char  outBytes[4];
+    int i = 0 ,  contAux = 0;
+    uint32_t aux, c = !EOF, inBytes[3] ;
+    
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");
         exit(0);
     }
-
+    
     if ((fp_out = fopen(out, "wb")) == NULL) {
         printf("\nErro ao abrir o arquivo de saída.\n\n");
         exit(0);
     }
-
-
-
+    
+    
+    
     while (feof(fp_in) == 0) {
-
+    	
     	for (i = 0; i < 4; i++)
         	inBytes[i] = 0;
-
+        
         for (i = 0; i < 4; i++) {
-            if ((c = getc(fp_in), feof(fp_in)) == 0)
+            if ((c = getc(fp_in), feof(fp_in)) == 0){
 				inBytes[i] = c;
+				}
 
             else
                 break;
         }
+        
+		
+	    aux = inBytes[0]*256*256*256 + inBytes[1]*256*256 + inBytes[2]*256 + inBytes[3];
 
-        aux = inBytes[0]*256*256*256 + inBytes[1]*256*256 + inBytes[2]*256 + inBytes[3];
-
-		if (inBytes[0] > 0) putc (aux/(85*85*85*85) % 85 + 33	, fp_out);
-        if (inBytes[0] > 0) putc (aux/(85*85*85) % 85 + 33		, fp_out);
-        if (inBytes[1] > 0) putc (aux/(85*85) % 85 + 33			, fp_out);
-    	if (inBytes[2] > 0) putc (aux/(85) % 85 + 33			, fp_out);
-    	if (inBytes[3] > 0) putc (aux%85 + 33					, fp_out);
+		
+		if (aux == 0 ) 		{ putc (122							, fp_out); contAux++; continue;} 
+		else{
+			if (inBytes[0] > 0) { putc (aux/(85*85*85*85) % 85 + 33	|0, fp_out);contAux++; }
+        	if (inBytes[0] > 0) { putc (aux/(85*85*85) % 85 + 33	|0, fp_out);contAux++; }
+        	if (inBytes[1] > 0) { putc (aux/(85*85) % 85 + 33		|0, fp_out);contAux++; }
+    		if (inBytes[1] > 0) { putc (aux/(85) % 85 + 33			|0, fp_out);contAux++; }
+    		if (inBytes[2] > 0) { putc (aux%85 + 33					|0, fp_out);contAux++; }
+    		if (contAux % 80 == 0) putc ( 10 						|0, fp_out);
+    		if (feof(fp_in)) 	  fputs ("~>"						  , fp_out); 
+    		}
+    	
 	}
-
+	
 	fclose(fp_in);
     fclose(fp_out);
 
 }
-
 
 
 void decode85(char *in, char *out)

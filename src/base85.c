@@ -20,12 +20,13 @@
  */
 #include "base85.h"
 
+int pesos[] = {85*85*85*85, 85*85*85, 85*85, 85, 1};
 
 void encode85(char *in, char *out) 
 {
 	
     FILE *fp_in = NULL, *fp_out = NULL;
-    char  outBytes[4];
+    char  outBytes[5];
     int i = 0 ,  contAux = 0 , lim = 0, count = 0;
     unsigned int  c = !EOF ;
     uint32_t aux = 0;
@@ -101,12 +102,13 @@ int get_nextC(FILE *fp_in) {
 }
 
 
-void decode85(char *in, char *out) 
+void decode85(char *in, char *out)
 {
-	
-	FILE *fp_in = NULL, *fp_out = NULL;
-    char c = !EOF, inBytes[5];
-    int i = 0 , j=0 , aux;
+    
+    FILE *fp_in = NULL, *fp_out = NULL;
+    char c = !EOF, count = 0;
+    int i = 0 , j = 0 ;
+    uint32_t aux = 0;
     
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");
@@ -119,35 +121,54 @@ void decode85(char *in, char *out)
     }
     
     while (feof(fp_in) == 0) {
-    	
-		for (i = 0; i < 5; i++)
-        	inBytes[i] = 0;
         
-        for (i = 0; i < 5; i++) {
-            if ((c = get_nextC(fp_in), feof(fp_in)) == 0){
-				inBytes[i] = c;
-			}
-            else
+        if ((c = get_nextC(fp_in), feof(fp_in)) == 0){
+           	if (c == '~' ){
+                c = get_nextC(fp_in);
+                if (c != '>') {
+                    printf("\n Falta o final do arquivo '~>'\n Falha no decode\n");
+                    exit (1);
+                }
+                
+                if (count > 0) {
+                    aux += pesos[count-1];
+                    for (j = 1 ; j<count ; j++)
+                        putc(aux >> ((4 - j) * 8),fp_out);
+                    break;
+                }
                 break;
+            }
         }
-		
-		
-		for (j = 0; j < 5; j++)
-            if(( inBytes[j] < 33 && inBytes[j] > 117) || inBytes[j] != 122 )
-				inBytes[j] = inBytes[j] - 33;
-			
-		
-		aux = inBytes[0]*85*85*85*85 + inBytes[1]*85*85*85 + inBytes[2]*85*85 + inBytes[3]*85 + inBytes[4];
-		
-		if (inBytes[0] > 0) putc (aux/(256*256*256) % 256	, fp_out);
-        if (inBytes[0] > 0) putc (aux/(256*256) % 256		, fp_out);
-        if (inBytes[1] > 0) putc (aux/(256) % 256			, fp_out);
-    	if (inBytes[1] > 0) putc (aux % 256 				, fp_out);
-    	
-	}
-	
-	fclose(fp_in);
+        
+        if (c == 'z' && count == 0) {
+            for (j = 1 ; j<5 ; j++)
+                putc(0,fp_out);
+            continue;
+        }
+        
+        
+        if (c < '!' || c > 'u') {
+            printf("\n Caracter invalido no arquivo...Impossivel decodificar...\n");
+            printf("%c ", c);
+            exit(0);
+        }
+        
+        aux += ((unsigned int)(c - '!')) * pesos[count++];
+        
+        if (count == 5) {
+            for (j = 1 ; j<count ; j++){
+                putc(aux >> ((4 - j) * 8),fp_out);
+                
+            }
+            
+            aux = 0;
+            count = 0;
+        }
+        
+    }
+    
+    fclose(fp_in);
     fclose(fp_out);
-	
-	
+    
+    
 }

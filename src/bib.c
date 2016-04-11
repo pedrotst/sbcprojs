@@ -32,7 +32,7 @@ int existe_opcao(char opt){
 int existe_arquivo(const char *nome_arquivo){
     FILE *pt_arquivo;
 
-    if(pt_arquivo = fopen(nome_arquivo, "r")){
+    if((pt_arquivo = fopen(nome_arquivo, "r"))){
         fclose(pt_arquivo);
         return 1;
     }

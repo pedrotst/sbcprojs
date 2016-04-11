@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <ctype.h>
 
 // Parâmetros:
 // *in : nome do arquivo de entrada.

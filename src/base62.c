@@ -31,7 +31,7 @@ void encode62(char *in, char *out){
     }
 
     if ((fp_out = fopen(out, "wb")) == NULL) {
-        printf("\nErro ao abrir o arquivo de saída.\n\n");
+        printf("\nErro ao abrir o arquivo de saida.\n\n");
         exit(0);
     }
 
@@ -150,7 +150,7 @@ void decode62(char *in, char *out){
     }
 
     if ((fp_out = fopen(out, "wb")) == NULL) {
-        printf("\nErro ao abrir o arquivo de saída.\n\n");
+        printf("\nErro ao abrir o arquivo de saida.\n\n");
         exit(0);
     }
 

@@ -60,6 +60,7 @@ void conversor(char opt1, char opt2, char *a_entrada, char *a_saida){
                 // Base 62.
                 case '2':
                     encode62(a_entrada, a_saida);
+                    printf("\nCodificado com Sucesso!\n\n");
                     break;
 
                 // Base 64.
@@ -92,6 +93,7 @@ void conversor(char opt1, char opt2, char *a_entrada, char *a_saida){
                 // Base 62.
                 case '2':
                     decode62(a_entrada, a_saida);
+                    printf("\nDecodificado com sucesso!\n\n");
                     break;
 
                 // Base 64.

@@ -63,16 +63,16 @@ void encode64(char *in, char *out) {
             outBytes[1] = b64[(inBytes[0] << 4 & 0b00110000) | (inBytes[1] >> 4 & 0b00001111)];
             outBytes[2] = i > 1 ? b64[(inBytes[1] << 2 & 0b00111100) | (inBytes[2] >> 6 & 0b00000011)] : '=';
             outBytes[3] = i > 2 ? b64[inBytes[2] & 0b00111111] : '=';
-        }
-
-        for (i = 0; i < 4; i++) {
-            putc(outBytes[i], fp_out);
-            charsLine++;
-        }
-
-        if ( charsLine == 76) {
-            putc('\n', fp_out);
-            charsLine = 0;
+        
+            for (i = 0; i < 4; i++) {
+                putc(outBytes[i], fp_out);
+                charsLine++;
+            }
+            
+            if ( charsLine == 76) {
+                putc('\n', fp_out);
+                charsLine = 0;
+            }
         }
     }
 

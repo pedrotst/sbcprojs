@@ -22,7 +22,7 @@
 
 // checa se uma das bases definidas foi escolhida
 int existe_opcao(char opt){
-    if(opt == '2' || opt == '4' || opt == '3' || opt == '1'){
+    if(opt == '2' || opt == '4' || opt == '5' || opt == '1'){
         return 1;
     }
     return 0;

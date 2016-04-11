@@ -9,7 +9,7 @@ main: base62.o base64.o base85.o base91.o bib.o moveobj
 	$(CC) $(CFLAGS) -o main $(SOURCE)/main.c $(OBJ)/base62.o $(OBJ)/base64.o $(OBJ)/base85.o $(OBJ)/base91.o $(OBJ)/bib.o
 
 base62.o: 
-	$(CC) $(CFLAGS) $(SOURCE)/base62.h $(SOURCE)/base62.c -c
+	$(CC) $(CFLAGS) $(SOURCE)/base62.h $(SOURCE)/base62.c -c -lm
 
 base64.o:
 	$(CC) $(CFLAGS) $(SOURCE)/base64.h $(SOURCE)/base64.c -c

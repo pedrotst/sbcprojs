@@ -59,6 +59,7 @@ void conversor(char opt1, char opt2, char *a_entrada, char *a_saida){
             switch (opt2) {
                 // Base 62.
                 case '2':
+                    encode62(a_entrada, a_saida);
                     break;
 
                 // Base 64.
@@ -90,6 +91,7 @@ void conversor(char opt1, char opt2, char *a_entrada, char *a_saida){
             switch (opt2) {
                 // Base 62.
                 case '2':
+                    decode62(a_entrada, a_saida);
                     break;
 
                 // Base 64.

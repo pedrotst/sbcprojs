@@ -128,7 +128,7 @@ void conversor(char opt1, char opt2, char *a_entrada, char *a_saida){
 
 int main(int argc, char **argv) {
     char op = '\0', base = '\0';
-    char arq_entrada[20], arq_saida[20], buf[20];
+    char arq_entrada[200], arq_saida[200], buf[20];
 
     //Se o programa for inicializado sem parametros, eles serao
     //pedidos ao usuario.

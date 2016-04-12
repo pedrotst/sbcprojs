@@ -40,7 +40,7 @@ char ENCODING_TABLE[91] =
     char c1, c2, c;
     int i = 0;
     long filelen;
-    int buf=0, bit_loc=0, val=0;
+    int buf=0, bit_loc=0, val=0, cline_counter=0;
 
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");
@@ -72,8 +72,13 @@ char ENCODING_TABLE[91] =
             }
             c1 = ENCODING_TABLE[(int)val/91];
             c2 = ENCODING_TABLE[(int)val%91];
+            cline_counter+=2;
             fprintf(fp_out, "%c%c", c2, c1);
-        }
+            if(cline_counter == 76){ // every 76 chars puts a \n
+                fprintf(fp_out, "\n");
+                cline_counter = 0;
+            }
+         }
     }
     if(bit_loc > 0){
         fprintf(fp_out, "%c", ENCODING_TABLE[buf%91]);

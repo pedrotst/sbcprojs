@@ -9,11 +9,6 @@ char b62[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"};
 char getIndexb62(char c) {
     char *p = NULL, index = 0;
 
-    if (c == '9'){
-        return -1;
-    }
-
-
     p = strchr(b62, c);
     index = (char)(p - b62);
 
@@ -23,7 +18,7 @@ char getIndexb62(char c) {
 void encode62(char *in, char *out){
     FILE *fp_in = NULL, *fp_out = NULL;
     char CV, um, umQ, umCode, dois, doisQ, doisCode, rest;
-    int readNBytes = 6, leftNBytes = 8;
+    int readNBytes = 6, leftNOffBytes = 8, shift = 0;
 
     if ((fp_in = fopen(in, "rb")) == NULL) {
         printf("\nErro ao abrir o arquivo de entrada.\n\n");
@@ -39,98 +34,156 @@ void encode62(char *in, char *out){
     if(CV == EOF){
         CV = 0b00000000;
     }
+    //fprintf(fp_out, BYTETOBINARYPATTERN, BYTETOBINARY(CV));
 
     while(feof(fp_in) == 0) {
-        if(leftNBytes > 5){
-            um = ((CV >> (leftNBytes-readNBytes)) & (int)(pow(2,readNBytes) - 1));
-            umQ = ((CV >> (leftNBytes-readNBytes)) & (int)(pow(2,readNBytes) - 1));
-
-            if(um < 61){
-                umCode = b62[um];
-                putc(umCode, fp_out);
+        if(leftNOffBytes > 5){
+            if(shift == 0){
+                um = ((CV >> (leftNOffBytes-readNBytes)) & (int)(pow(2,readNBytes) - 1))%62;
+                umQ = ((CV >> (leftNOffBytes-readNBytes)) & (int)(pow(2,readNBytes) - 1))/62;
+//                printf("%d %d ", readNBytes, leftNOffBytes);
+//                printf("REST: "BYTETOBINARYPATTERN" ", BYTETOBINARY(rest));
+//                printf("UM: "BYTETOBINARYPATTERN6" ", BYTETOBINARY6(um));
+//                printf("CV: "BYTETOBINARYPATTERN"\n", BYTETOBINARY(CV));
+            } else{
+                um = ((CV >> (leftNOffBytes-readNBytes)) & (int)(pow(2,readNBytes) - 1));
+                umQ = ((CV >> (leftNOffBytes-readNBytes)) & (int)(pow(2,readNBytes) - 1));
+                um = (((rest >> 1) << 1) | doisQ)%62;
+                umQ = (((rest >> 1) << 1) | doisQ)/62;
+//                printf("%d %d ", readNBytes, leftNOffBytes);
+//                printf("REST: "BYTETOBINARYPATTERN" ", BYTETOBINARY(rest));
+//                printf("SHUM: "BYTETOBINARYPATTERN6" ", BYTETOBINARY6(um));
+//                printf("CV: "BYTETOBINARYPATTERN"\n", BYTETOBINARY(CV));
+                shift = 0;
             }
-            if(um == 61){
-                putc(b62[61], fp_out);
-                putc(b62[0], fp_out);
-            }
-            if(um == 62){
-                putc(b62[61], fp_out);
-                putc(b62[1], fp_out);
-            }
-            if(um == 63){
-                putc(b62[61], fp_out);
-                putc(b62[2], fp_out);
+
+            umCode = b62[um];
+            putc(umCode, fp_out);
+            //fprintf(fp_out, BYTETOBINARYPATTERN6"|", BYTETOBINARY6(um));
+
+            leftNOffBytes -= readNBytes;
+            if(leftNOffBytes < 6)
+                rest = ((CV & (int)(pow(2,(leftNOffBytes)) - 1)) << (6-leftNOffBytes));
+            else
+                rest = (CV & (int)(pow(2,(leftNOffBytes)) - 1));
+
+            if(um > 1){
+                if(leftNOffBytes >= 6){
+                    readNBytes = 6;
+                } else{
+                    readNBytes = 6 - leftNOffBytes;
+                }
+            } else {
+                if(leftNOffBytes >= 5){
+                    readNBytes = 5;
+                } else{
+                    readNBytes = 5 - leftNOffBytes;
+                }
+                shift = 1;
+                if(leftNOffBytes >= 5){
+                    um = (((rest >> 1) << 1) | umQ)%62;
+                    umQ = (((rest >> 1) << 1) | umQ)/62;
+                    umCode = b62[um];
+                    putc(umCode, fp_out);
+//                    fprintf(fp_out, BYTETOBINARYPATTERN6"|", BYTETOBINARY6(um));
+//                    printf("%d %d ", readNBytes, leftNOffBytes);
+//                    printf("REST: "BYTETOBINARYPATTERN" ", BYTETOBINARY(rest));
+//                    printf("REUM: "BYTETOBINARYPATTERN6" ", BYTETOBINARY6(um));
+//                    printf("CV: "BYTETOBINARYPATTERN"\n", BYTETOBINARY(CV));
+                    leftNOffBytes -= readNBytes;
+                    rest = rest & (int)(pow(2,leftNOffBytes) - 1);
+                    readNBytes = 6 - leftNOffBytes;
+                    shift = 0;
+                }
             }
 
-            leftNBytes -= readNBytes;
-            rest = ((CV & (int)(pow(2,(8-readNBytes)) - 1)) << (6-leftNBytes));
-
-            //if(um > 1){
-                readNBytes = 6 - leftNBytes;
-            //} else {
-            //    if(leftNBytes < 5){
-            //        readNBytes = 5 - leftNBytes;
-            //    } else{
-            //        readNBytes = 5;
-            //    }
-            //}
-
-            if(readNBytes == 0){
+            if(readNBytes <= 0){
                 readNBytes = 6;
             }
-            if(leftNBytes == 0){
-                leftNBytes = 8;
+            if(leftNOffBytes <= 0){
+                leftNOffBytes = 8;
                 CV = getc(fp_in);
                 if(feof(fp_in)){
                     CV = 0b00000000;
                 }
+                //fprintf(fp_out, BYTETOBINARYPATTERN, BYTETOBINARY(CV));
             }
+
         } else{
             CV = getc(fp_in);
-            if(feof(fp_in)){
+            if(CV == EOF){
                 CV = 0b00000000;
             }
-
-            dois = (rest | (CV >> (8-readNBytes) & (int)(pow(2,readNBytes) - 1)));
-            doisQ = (rest | (CV >> (8-readNBytes) & (int)(pow(2,readNBytes) - 1)));
-
-            if(dois < 61){
-                doisCode = b62[dois];
-                putc(doisCode, fp_out);
+            //fprintf(fp_out, BYTETOBINARYPATTERN, BYTETOBINARY(CV));
+            if(shift == 0){
+                dois = (rest | (CV >> (8-readNBytes) & (int)(pow(2,readNBytes) - 1)))%62;
+                doisQ = (rest | (CV >> (8-readNBytes) & (int)(pow(2,readNBytes) - 1)))/62;
+//                printf("%d %d ", readNBytes, leftNOffBytes);
+//                printf("REST: "BYTETOBINARYPATTERN" ", BYTETOBINARY(rest));
+//                printf("DOIS: "BYTETOBINARYPATTERN6" ", BYTETOBINARY6(dois));
+//                printf("CV: "BYTETOBINARYPATTERN"\n", BYTETOBINARY(CV));
+            } else{
+                dois = (rest | (CV >> (8-readNBytes) & (int)(pow(2,readNBytes) - 1)));
+                doisQ = (rest | (CV >> (8-readNBytes) & (int)(pow(2,readNBytes) - 1)));
+                dois = (((dois >> 1) << 1) | umQ)%62;
+                doisQ = (((dois >> 1) << 1) | umQ)/62;
+//                printf("%d %d ", readNBytes, leftNOffBytes);
+//                printf("REST: "BYTETOBINARYPATTERN" ", BYTETOBINARY(rest));
+//                printf("SHDOIS: "BYTETOBINARYPATTERN6" ", BYTETOBINARY6(dois));
+//                printf("CV: "BYTETOBINARYPATTERN"\n", BYTETOBINARY(CV));
+                shift = 0;
             }
-            if(dois == 61){
-                putc(b62[61], fp_out);
-                putc(b62[0], fp_out);
+
+            doisCode = b62[dois];
+            putc(doisCode, fp_out);
+            //fprintf(fp_out, BYTETOBINARYPATTERN6"|", BYTETOBINARY6(dois));
+
+            leftNOffBytes = (8-readNBytes);
+            if(leftNOffBytes < 6)
+                rest = ((CV & (int)(pow(2,(leftNOffBytes)) - 1)) << (6-leftNOffBytes));
+            else
+                rest = (CV & (int)(pow(2,(leftNOffBytes)) - 1));
+
+            if(dois > 1){
+                if(leftNOffBytes >= 6){
+                    readNBytes = 6;
+                } else{
+                    readNBytes = 6 - leftNOffBytes;
+                }
+            } else {
+                if(leftNOffBytes >= 5){
+                    readNBytes = 5;
+                } else{
+                    readNBytes = 5 - leftNOffBytes;
+                }
+                shift = 1;
+                if(leftNOffBytes >= 5){
+                    dois = (((rest >> 1) << 1) | doisQ)%62;
+                    doisQ = (((rest >> 1) << 1) | doisQ)/62;
+                    doisCode = b62[dois];
+                    putc(doisCode, fp_out);
+//                    fprintf(fp_out, BYTETOBINARYPATTERN6"|", BYTETOBINARY6(dois));
+//                    printf("%d %d ", readNBytes, leftNOffBytes);
+//                    printf("REST: "BYTETOBINARYPATTERN" ", BYTETOBINARY(rest));
+//                    printf("REDOIS: "BYTETOBINARYPATTERN6" ", BYTETOBINARY6(dois));
+//                    printf("CV: "BYTETOBINARYPATTERN"\n", BYTETOBINARY(CV));
+                    leftNOffBytes -= readNBytes;
+                    rest = rest & (int)(pow(2,leftNOffBytes) - 1);
+                    readNBytes = 6 - leftNOffBytes;
+                    shift = 0;
+                }
             }
-            if(dois == 62){
-                putc(b62[61], fp_out);
-                putc(b62[1], fp_out);
-            }
-            if(dois == 63){
-                putc(b62[61], fp_out);
-                putc(b62[2], fp_out);
-            }
 
-            leftNBytes = (8-readNBytes);
-
-            rest = ((CV & (int)(pow(2,(8-readNBytes)) - 1)) << (6-leftNBytes));
-
-            //if(dois > 1){
-                readNBytes = 6 - leftNBytes;
-            //} else {
-            //    if(leftNBytes < 5){
-            //        readNBytes = 5 - leftNBytes;
-            //    } else{
-            //        readNBytes = 5;
-            //    }
-            //}
-
-            if(readNBytes == 0){
+            if(readNBytes <= 0){
                 readNBytes = 6;
             }
-            if(leftNBytes == 0){
-                leftNBytes = 8;
+            if(leftNOffBytes <= 0){
+                leftNOffBytes = 8;
                 CV = getc(fp_in);
+                if(CV == EOF){
+                    CV = 0b00000000;
+                }
+                //fprintf(fp_out, BYTETOBINARYPATTERN, BYTETOBINARY(CV));
             }
         }
     }

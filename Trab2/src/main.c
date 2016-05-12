@@ -34,14 +34,47 @@ void init_huge(huge h){
     }
 }
 
-void str_to_huge(char* str, huge h){
-    int i = strlen(str) - 1;
-    int pow_index = 0;
-    while(i >= 0){
-        h[0] += (str[i] - '0') * pow(10, pow_index);
-        i--; pow_index++;
-    }
+int chtoi(char a){
+    return (int) a - '0';
+}
 
+
+char intochar(int i){
+    return (char) i + '0';
+}
+
+int nilstring(char *str, int len){
+    for(int i=len-1; i >= 0 ; i--) // begin from the end for optimization
+        if(str[i] != '0')
+            return 0;
+    return 1;
+}
+
+void str_to_huge(char* num, huge h){ // len(str) == 79
+    char divided_num[79];
+    int aux, len, i, j=0, k=0;
+    init_huge(h);
+
+    num[78] = 0;
+
+    len = strlen(num); // we assume num is well formed
+    do{
+        for(i = 0; i < len; i++){
+            aux = chtoi(num[i]);
+            if(aux % 2 != 0) // se nao for divisivel, vai um
+                num[i+1] = intochar(chtoi(num[i+1])) + 10; 
+            divided_num[i] = intochar(aux / 2);
+        }
+        divided_num[78] = '\0';
+        if(num[i] != '\0')
+           h[k] += 1 << j; 
+        j++;
+        if(j == 33)
+            j = 0, k++;
+        strcpy(num, divided_num);
+        len = strlen(num);
+    }while(!nilstring(num, len));
+    
 }
 
 int main(int argc, char **argv){
@@ -50,10 +83,16 @@ int main(int argc, char **argv){
     char num[79]; //maior numero de 255 bits tem tamanho 77, + sinal + \0
     strcpy(num, argv[1]); 
     init_huge(h);
-
     printf("%d  %s\n", argc, argv[1]);
-    printf("%s\n", num);
+    printf("%s \n", num );
     str_to_huge(num, h);
     printf("%" PRIu32 "\n", h[0]);
+
+    /* testing if functions works
+     * char *tst = ":;<=>?@ABC";
+    for(int i=0; i < strlen(tst); i++){
+        printf("%c\n", intochar(chtoi(tst[i])));
+    }
+    */
     return 0;
 }

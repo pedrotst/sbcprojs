@@ -1,0 +1,50 @@
+Universidade de Brasília
+Instituto de Ciencias Exatas
+Departamento de Ciência da Computação
+
+Software Básico - Turma A - 1/2016
+
+Codificadores Binários
+
+Grupo 3:
+  - Carlos Joel Tavares da Silva  13/0007293
+  - Felipe Barreto Fernandes      09/0112831
+  - Felipe Borges Albuquerque     09/93972
+  - Géssica Neves Sodré da Silva  11/0146115
+  - Pedro da Costa Abreu Júnior   11/0018800
+
+READ ME
+
+Copyright © 2016 UnB. All rights reserved.
+==============================================================
+
+Descrição: Este programa tem como objetivo a codificação ou decodificação de dados arquivos de entrada em diversos formatos para arquivos codificados em Base 62, Base 64, Base 85, e Base 91. Além disso, segue o padrão C99.
+
+==============================================================
+
+ATENÇÃO: Este programa foi desenvolvido e testado nas plataformas windows e linux
+
+==============================================================
+
+COMPILAÇÃO
+Para compilar esse programa utilizando o terminal a partir da raiz do projeto execute:
+$ make all
+
+EXECUÇÃO
+Para executar esse programa utilizando o terminal a partir da raiz do projeto execute:
+$ ./main.exe { -e | -d | -h } { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saida}
+
+De forma que:
+{ -e | -d | -h }
+-e Caso queira codificar o arquivo
+-d Caso queira decodificar o arquivo
+-h Abrir o menu de ajuda
+
+{ -b62 | -b64 | -b85 | -b91 }
+-b62 A base utilizada sera a base 62.
+-b64 A base utilizada sera a base 64.
+-b85 A base utilizada sera a base 85.
+-b91 A base utilizada sera a base 91.
+
+
+OBS: Caso não sejam passados parâmetros por linha de comando, o programa irá solicitar as entradas novamente

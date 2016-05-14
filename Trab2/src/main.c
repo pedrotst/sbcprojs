@@ -50,6 +50,10 @@ int nilstring(char *str, int len){
     return 1;
 }
 
+/*Esta funcao implementa a conversao de decimal para binario
+ * atraves do algoritmo de divisao sucessiva por 2
+ * recebe o numero de 256 num e o huge recepient
+ */
 void str_to_huge(char* num, huge h){ // len(str) == 79
     char divided_num[79];
     int aux, len, i, j=0, k=0;
@@ -69,12 +73,17 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
         if(num[i] != '\0')
            h[k] += 1 << j; 
         j++;
-        if(j == 33)
+        if(j == 31)
             j = 0, k++;
         strcpy(num, divided_num);
         len = strlen(num);
     }while(!nilstring(num, len));
     
+}
+
+void huge_to_str(huge h, char *num){
+   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[3], h[2], h[1], h[0]); 
+
 }
 
 int main(int argc, char **argv){
@@ -86,7 +95,12 @@ int main(int argc, char **argv){
     printf("%d  %s\n", argc, argv[1]);
     printf("%s \n", num );
     str_to_huge(num, h);
+    huge_to_str(h, num);
+    //printf("%" PRIu32, h[3]); // eu sei q eh estranho, mas eh assim q printa uint32_t
+    //printf("%" PRIu32, h[2]);
+    printf("%" PRIu32"\n", h[1]);
     printf("%" PRIu32 "\n", h[0]);
+    printf("%s\n", num);
 
     /* testing if functions works
      * char *tst = ":;<=>?@ABC";

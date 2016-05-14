@@ -5,20 +5,14 @@ OBJ = ./obj/Debug/src
 
 all: main movemain
 
-main: main.o moveobj
-	$(CC) $(CFLAGS) -o main $(OBJ)/main.o -lm
+main: utils.o moveobj
+	$(CC) $(CFLAGS) -o main $(SOURCE)/main.c $(OBJ)/utils.o -lm	
 
-main.o:
-	$(CC) $(CFLAGS) -c $(SOURCE)/main.c -lm
-	
-
-base62.o: 
-	$(CC) $(CFLAGS) $(SOURCE)/base62.h $(SOURCE)/base62.c -c -lm
+utils.o: 
+	$(CC) $(CFLAGS) $(SOURCE)/utils.h $(SOURCE)/utils.c -c -lm
 
 moveobj:
 	mv ./*.o ./obj/Debug/src/
 
 movemain:
 	cp ./main ./bin/Debug/SBProject
-
-

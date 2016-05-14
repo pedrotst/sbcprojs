@@ -14,28 +14,31 @@
  *      - Géssica Neves Sodré da Silva  11/0146115
  *      - Pedro da Costa Abreu Júnior   11/0018800
  *
- *  Arquivo fonte principal "main.c"
+ *  Arquivo de cabeçalho "utils.h"
  *
  *  Copyright © 2016 UnB. All rights reserved.
  */
-#include "utils.h"
 
-int main(int argc, char **argv){
+#ifndef _UTILS_H_
+#define _UTILS_H_
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <math.h>
+#include <string.h>
 
-    huge h;
-    char num[79]; //maior numero de 255 bits tem tamanho 77, + sinal + \0
-    strcpy(num, argv[1]); 
-    init_huge(h);
-    printf("%d  %s\n", argc, argv[1]);
-    printf("%s \n", num );
-    str_to_huge(num, h);
-    printf("%" PRIu32 "\n", h[0]);
+ typedef uint32_t huge[8];
 
-    /* testing if functions works
-     * char *tst = ":;<=>?@ABC";
-    for(int i=0; i < strlen(tst); i++){
-        printf("%c\n", intochar(chtoi(tst[i])));
-    }
-    */
-    return 0;
-}
+ void init_huge(huge h);
+
+ int chtoi(char a);
+
+ char intochar(int i);
+
+ int nilstring(char *str, int len);
+
+ void str_to_huge(char* num, huge h);
+
+ #endif /* _UTILS_H_ */

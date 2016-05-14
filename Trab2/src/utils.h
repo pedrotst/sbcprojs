@@ -34,23 +34,86 @@
   */
 typedef uint32_t huge[8];
 
+ /*
+  * Brief       : Inicializa o número huge
+  *
+  * Descrição   : Inicializa o número huge colocando zeros em todas as posições
+  *
+  * Parâmetros  : huge h: número de 256bits a ser inicializado
+  *
+  * Retorno     : Nenhum
+  */
 void init_huge(huge h);
 
+ /*
+  * Brief       : Converte char para int
+  *
+  * Descrição   : Converte char recebido para int
+  *
+  * Parâmetros  : char a: char a ser convertido
+  *
+  * Retorno     : int: número convertido
+  */
 int chtoi(char a);
 
+ /*
+  * Brief       : Converte int para char
+  *
+  * Descrição   : Converte int recebido para char
+  *
+  * Parâmetros  : char a: char a ser convertido
+  *
+  * Retorno     : int: número convertido
+  */
 char intochar(int i);
 
+ /*
+  * Brief       : Verifica se a string está vazia
+  *
+  * Descrição   : Verifica se a string está vazia, ou seja, contém
+  *				  somente zeros
+  *
+  * Parâmetros  : char *str: string a ser verificada
+  *				  int len: 	 tamanho da string
+  *
+  * Retorno     : int: 0 se a string não está vazia, 1 se a string está vazia
+  */
 int nilstring(char *str, int len);
 
+ /*
+  * Brief       : Converte um decimal para binário
+  *
+  * Descrição   : Converte um decimal para binário através do algoritmo
+  *				  de sucessivas divisões por 2
+  *
+  * Parâmetros  : char *num: string a ser convertida
+  *				  huge h:	 tipo huge que receberá o número binário
+  *				  			 convertido
+  *
+  * Retorno     : Nenhum
+  */
 void str_to_huge(char* num, huge h);
 
+ /*
+  * Brief       : Converte um binário para decimal
+  *
+  * Descrição   : Converte um binário para decimal
+  *
+  * Parâmetros  : huge h:	 tipo huge a ser convertido
+  *				  char *num: string que receberá o binário convertido para
+  *					   		 decimal
+  *
+  * Retorno     : Nenhum
+  */
 void huge_to_str(huge h, char *num);
 
  /*
   * Brief       : Converte notação infixa para pós-fixa
   *
   * Descrição   : Converte notação infixa para pós-fixa
+  *
   * Parâmetros  : char *infix: string com a operação infixa
+  *
   * Retorno     : char *posfix: string com a operação pós-fix
   */
 char * infix_to_postfix(char *infix);

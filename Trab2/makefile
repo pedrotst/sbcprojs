@@ -16,9 +16,11 @@ base62.o:
 	$(CC) $(CFLAGS) $(SOURCE)/base62.h $(SOURCE)/base62.c -c -lm
 
 moveobj:
+	mkdir -p ./obj/Debug/src/
 	mv ./*.o ./obj/Debug/src/
 
 movemain:
+	mkdir -p ./bin/Debug/SBProject
 	cp ./main ./bin/Debug/SBProject
 
 

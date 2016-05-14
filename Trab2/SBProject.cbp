@@ -30,26 +30,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/base62.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/base62.h" />
-		<Unit filename="src/base64.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/base64.h" />
-		<Unit filename="src/base85.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/base85.h" />
-		<Unit filename="src/base91.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/base91.h" />
-		<Unit filename="src/bib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/bib.h" />
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>

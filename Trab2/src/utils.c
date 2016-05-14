@@ -31,7 +31,6 @@ int chtoi(char a){
     return (int) a - '0';
 }
 
-
 char intochar(int i){
     return (char) i + '0';
 }
@@ -43,6 +42,11 @@ int nilstring(char *str, int len){
     return 1;
 }
 
+/*
+ * Esta funcao implementa a conversao de decimal para binario
+ * atraves do algoritmo de divisao sucessiva por 2
+ * recebe o numero de 256 num e o huge recepient
+ */
 void str_to_huge(char* num, huge h){ // len(str) == 79
     char divided_num[79];
     int aux, len, i, j=0, k=0;
@@ -62,10 +66,15 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
         if(num[i] != '\0')
            h[k] += 1 << j; 
         j++;
-        if(j == 33)
+        if(j == 31)
             j = 0, k++;
         strcpy(num, divided_num);
         len = strlen(num);
     }while(!nilstring(num, len));
     
+}
+
+void huge_to_str(huge h, char *num){
+   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[3], h[2], h[1], h[0]); 
+
 }

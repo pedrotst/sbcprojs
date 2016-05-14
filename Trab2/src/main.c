@@ -18,6 +18,7 @@
  *
  *  Copyright © 2016 UnB. All rights reserved.
  */
+
 #include "utils.h"
 
 int main(int argc, char **argv){
@@ -29,7 +30,12 @@ int main(int argc, char **argv){
     printf("%d  %s\n", argc, argv[1]);
     printf("%s \n", num );
     str_to_huge(num, h);
+    huge_to_str(h, num);
+    //printf("%" PRIu32, h[3]); // eu sei q eh estranho, mas eh assim q printa uint32_t
+    //printf("%" PRIu32, h[2]);
+    printf("%" PRIu32"\n", h[1]);
     printf("%" PRIu32 "\n", h[0]);
+    printf("%s\n", num);
 
     /* testing if functions works
      * char *tst = ":;<=>?@ABC";

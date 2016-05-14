@@ -21,7 +21,7 @@
 
 #ifndef _UTILS_H_
 #define _UTILS_H_
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -40,5 +40,7 @@
  int nilstring(char *str, int len);
 
  void str_to_huge(char* num, huge h);
+
+ void huge_to_str(huge h, char *num);
 
  #endif /* _UTILS_H_ */

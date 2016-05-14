@@ -12,7 +12,9 @@ utils.o:
 	$(CC) $(CFLAGS) $(SOURCE)/utils.h $(SOURCE)/utils.c -c -lm
 
 moveobj:
+	mkdir -p ./obj/Debug/src/
 	mv ./*.o ./obj/Debug/src/
 
 movemain:
+	mkdir -p ./bin/Debug/SBProject
 	cp ./main ./bin/Debug/SBProject

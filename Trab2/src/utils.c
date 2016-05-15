@@ -78,3 +78,23 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
 void huge_to_str(huge h, char *num){
    sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[3], h[2], h[1], h[0]);
 }
+
+char *int2bin(uint32_t a){
+ char *str,*tmp;
+ int cnt = 31;
+ str = (char *) malloc(33); /*32 + 1 , because its a 32 bit bin number*/
+ tmp = str;
+ while ( cnt > -1 ){
+      str[cnt]= '0';
+      cnt --;
+ }
+ cnt = 31;
+ while (a > 0){
+       if (a%2==1){
+           str[cnt] = '1';
+        }
+      cnt--;
+        a = a/2 ;
+ }
+ return tmp;
+}

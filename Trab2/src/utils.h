@@ -207,6 +207,6 @@ huge * multiplica(huge dir, huge esq);
   */
 huge * divide(huge dir, huge esq);
 
-
+char *int2bin(uint32_t a);
 
  #endif /* _UTILS_H_ */

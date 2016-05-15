@@ -139,7 +139,7 @@ void push(huge number);
   *
   * Retorno     : huge: número desempilhado tamanho 256bits
   */
-huge pop(void);
+huge * pop(void);
 
 
  /*
@@ -166,7 +166,7 @@ void operacao(char operador);
   *
   * Retorno     : huge result: número de 256bits resultante da operação de soma
   */
-huge soma(huge dir, huge esq);
+huge * soma(huge dir, huge esq);
 
  /*
   * Brief       : Executa a operação de diferença
@@ -179,7 +179,7 @@ huge soma(huge dir, huge esq);
   *
   * Retorno     : huge result: número de 256bits resultante da operação de diferença
   */
-huge subtrai(huge dir, huge esq);
+huge * subtrai(huge dir, huge esq);
 
  /*
   * Brief       : Executa a operação de multiplicação
@@ -192,7 +192,7 @@ huge subtrai(huge dir, huge esq);
   *
   * Retorno     : huge result: número de 256bits resultante da operação de multiplicação
   */
-huge multiplica(huge dir, huge esq);
+huge * multiplica(huge dir, huge esq);
 
  /*
   * Brief       : Executa a operação de divisao
@@ -205,7 +205,7 @@ huge multiplica(huge dir, huge esq);
   *
   * Retorno     : huge result: número de 256bits resultante da operação de divisao
   */
-huge divide(huge dir, huge esq);
+huge * divide(huge dir, huge esq);
 
 
 

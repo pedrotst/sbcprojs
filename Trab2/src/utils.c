@@ -124,15 +124,15 @@ char *int2bin(uint32_t a){
     }
 }*/
 
-void soma(huge res, huge operand1, huge operand2) {
+void soma(huge res, huge esq, huge dir) {
       uint32_t bit1 = 0, bit2 = 0, sum_bit = 0;
       int32_t i = 0, shift = 0;
       uint32_t overflow = 0;
 
       for (i = 7; i >= 0; i--) {
             for (shift = 0; shift < 32; shift++) {
-                  bit1 = operand1[i] >> shift & 0x00000001;
-                  bit2 = operand2[i] >> shift & 0x00000001;
+                  bit1 = esq[i] >> shift & 0x00000001;
+                  bit2 = dir[i] >> shift & 0x00000001;
                   sum_bit = bit1 ^ bit2 ^ overflow;
                   overflow = (bit1 & bit2) | (bit1 & overflow) | (bit2 & overflow);
                   res[i] = res[i] | (sum_bit << shift);
@@ -140,3 +140,25 @@ void soma(huge res, huge operand1, huge operand2) {
       }
       return;
 }
+
+void subtrai(huge res, huge esq, huge dir){
+    int i;
+    // recebe a negação do segundo operando
+    huge inverte = {0};
+
+    huge um = {0};
+    huge sub = {0};
+
+    for(i = 7; i >= 0; i--){
+        inverte[i] = ~dir[i];
+    }
+
+    um[7] = 1;
+
+    // soma 1 do complemento a dois
+    soma(sub, inverte, um);
+
+    // faz a soma com o resultado do complemento a dois
+    soma(res, sub, esq);
+}
+

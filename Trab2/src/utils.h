@@ -168,7 +168,7 @@ void operacao(char operador, huge res);
   *
   * Retorno     : Nenhum
   */
-void soma(huge res, huge dir, huge esq);
+void soma(huge res, huge esq, huge dir);
 
  /*
   * Brief       : Executa a operação de diferença
@@ -182,7 +182,7 @@ void soma(huge res, huge dir, huge esq);
   *
   * Retorno     : Nenhum
   */
-void subtrai(huge res, huge dir, huge esq);
+void subtrai(huge res, huge esq, huge dir);
 
  /*
   * Brief       : Executa a operação de multiplicação
@@ -196,7 +196,7 @@ void subtrai(huge res, huge dir, huge esq);
   *
   * Retorno     : Nenhum
   */
-void multiplica(huge res, huge dir, huge esq);
+void multiplica(huge res, huge esq, huge dir);
 
  /*
   * Brief       : Executa a operação de divisao
@@ -210,7 +210,7 @@ void multiplica(huge res, huge dir, huge esq);
   *
   * Retorno     : Nenhum
   */
-void divide(huge res, huge dir, huge esq);
+void divide(huge res, huge esq, huge dir);
 
 char *int2bin(uint32_t a);
 

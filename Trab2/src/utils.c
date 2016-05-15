@@ -128,6 +128,7 @@ void soma(huge res, huge esq, huge dir) {
       uint32_t bit1 = 0, bit2 = 0, sum_bit = 0;
       int32_t i = 0, shift = 0;
       uint32_t overflow = 0;
+      huge aux_res = {0};
 
       for (i = 7; i >= 0; i--) {
             for (shift = 0; shift < 32; shift++) {
@@ -135,9 +136,12 @@ void soma(huge res, huge esq, huge dir) {
                   bit2 = dir[i] >> shift & 0x00000001;
                   sum_bit = bit1 ^ bit2 ^ overflow;
                   overflow = (bit1 & bit2) | (bit1 & overflow) | (bit2 & overflow);
-                  res[i] = res[i] | (sum_bit << shift);
+                  aux_res[i] = aux_res[i] | (sum_bit << shift);
             }
       }
+
+      memcpy(res, aux_res, 32);
+
       return;
 }
 
@@ -162,3 +166,17 @@ void subtrai(huge res, huge esq, huge dir){
     soma(res, sub, esq);
 }
 
+void multiplica(huge res, huge esq, huge dir) {
+      huge counter = {0}, one = {0};
+
+      // Garantindo que o res está com 0.
+      init_huge(res);
+
+      // Inicializando o huge com 1.
+      one[7] = 1;
+
+      for (init_huge(counter) ; memcmp(dir, counter, 32); soma(counter, counter, one))
+            soma(res, res, esq);
+
+      return;
+}

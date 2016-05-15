@@ -42,7 +42,7 @@ int main(int argc, char **argv){
 
     str_to_huge(argv[1], operand1);
     str_to_huge(argv[2], operand2);
-    soma(res_h, operand1, operand2);
+    multiplica(res_h, operand1, operand2);
     huge_to_str(res_h, res_string);
     printf("%s\n", res_string);
 

@@ -58,15 +58,16 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
                 num[i+1] = intochar(chtoi(num[i+1])) + 10; // soma dez para emular o "resta um"
             divided_num[i] = intochar(aux / 2); // adiciona o resultado da divisão de aux por dois ao array
         }
-
         // grava o número em bits no array huge
-        divided_num[78] = '\0';
+        divided_num[i] = '\0';
+        
         if(num[i] != '\0') 
            h[k] += 1 << j;
+
         j++;
         
         // trata o overflow andando no array huge
-        if(j == 31)
+        if(j == 32)
             j = 0, k++;
         
         // copia o resto da divisão para num, e continua dividindo a partir daí

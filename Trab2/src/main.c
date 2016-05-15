@@ -30,7 +30,7 @@ int main(int argc, char **argv){
     printf("%d  %s\n", argc, argv[1]);
     printf("%s \n", num );
     str_to_huge(num, h);
-    printf("%s %s\n", int2bin(h[1]), int2bin(h[0]));
+    printf("%s %s %s\n", int2bin(h[2]), int2bin(h[1]), int2bin(h[0]));
     huge_to_str(h, num);
     //printf("%" PRIu32, h[3]); // eu sei q eh estranho, mas eh assim q printa uint32_t
     //printf("%" PRIu32, h[2]);

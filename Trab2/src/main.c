@@ -24,13 +24,14 @@
 int main(int argc, char **argv){
 
     huge h;
-    char num[79]; //maior numero de 255 bits tem tamanho 77, + sinal + \0
+    char num[79]; // maior numero de 255 bits tem tamanho 77, + sinal + \0
     strcpy(num, argv[1]); 
     init_huge(h);
     
+    // converte um número para o formato huge
     str_to_huge(num, h);
-    printf("Resultado 256bits\n");
-    printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n", int2bin(h[7]), int2bin(h[6]), int2bin(h[5]), int2bin(h[4]), int2bin(h[3]), int2bin(h[2]), int2bin(h[1]), int2bin(h[0]));
+    printf("Resultado 256bits ordem correta\n");
+    printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n", int2bin(h[0]), int2bin(h[1]), int2bin(h[2]), int2bin(h[3]), int2bin(h[4]), int2bin(h[5]), int2bin(h[6]), int2bin(h[7]));
     
     huge_to_str(h, num);
     printf("Resultado em blocos de int\n");

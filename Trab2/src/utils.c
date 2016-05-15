@@ -44,7 +44,7 @@ int nilstring(char *str, int len){
 
 void str_to_huge(char* num, huge h){ // len(str) == 79
     char divided_num[79] = {0};
-    int aux, len, i, j=0, k=0;
+    int aux, len, i, j=0, k=7;
     init_huge(h);
 
     num[78] = 0;
@@ -68,7 +68,7 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
 
         // trata o overflow andando no array huge
         if(j == 32)
-            j = 0, k++;
+            j = 0, k--;
 
         // copia o resto da divisão para num, e continua dividindo a partir daí
         strcpy(num, divided_num);
@@ -77,9 +77,11 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
 }
 
 void huge_to_str(huge h, char *num){
-   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[3], h[2], h[1], h[0]);
+   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
 }
 
+
+///////// DELETAR ANTES DE ENVIAR PELAMORDEDEUS
 char *int2bin(uint32_t a){
  char *str,*tmp;
  int cnt = 31;
@@ -99,3 +101,25 @@ char *int2bin(uint32_t a){
  }
  return tmp;
 }
+///////// 
+
+/*void operacao(char operador, huge res){
+    // declara e inicializa os operandos
+    huge esq = {0};
+    huge dir = {0};
+
+    // desempilha os operandos da pilha
+    esq = pop();
+    dir = pop();
+
+    switch(operador){
+        case '+': soma(res, dir, esq);
+                  break;
+        case '-': subrai(res, dir, esq);
+                  break;
+        case '*': multiplica(res, dir, esq);
+                  break;
+        case '/': divide(res, dir, esq);
+                  break;
+    }
+}*/

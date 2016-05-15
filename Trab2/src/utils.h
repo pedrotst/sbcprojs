@@ -149,10 +149,11 @@ huge * pop(void);
   *				  nos dois últimos números da pilha e empilha o resultado
   *
   * Parâmetros  : char operador: operador
+  *				  huge res: número de 256bits que receberá o resultado da operação
   *
   * Retorno     : Nenhum
   */
-void operacao(char operador);
+void operacao(char operador, huge res);
 // essa função deve conter um switch comm o operador que direcionará para a operação
 
  /*

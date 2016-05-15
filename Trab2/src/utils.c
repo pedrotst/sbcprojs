@@ -43,7 +43,7 @@ int nilstring(char *str, int len){
 }
 
 void str_to_huge(char* num, huge h){ // len(str) == 79
-    char divided_num[79];
+    char divided_num[79] = {0};
     int aux, len, i, j=0, k=0;
     init_huge(h);
 
@@ -60,16 +60,16 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
         }
         // grava o número em bits no array huge
         divided_num[i] = '\0';
-        
-        if(num[i] != '\0') 
+
+        if(num[i] != '\0')
            h[k] += 1 << j;
 
         j++;
-        
+
         // trata o overflow andando no array huge
         if(j == 32)
             j = 0, k++;
-        
+
         // copia o resto da divisão para num, e continua dividindo a partir daí
         strcpy(num, divided_num);
         len = strlen(num);

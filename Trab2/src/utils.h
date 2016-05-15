@@ -161,12 +161,13 @@ void operacao(char operador);
   * Descrição   : Executa a operação de soma nos dois números passados
   *				  pela função chamadora
   *
-  * Parâmetros  : huge dir: número de 256bits da direita
+  * Parâmetros  : huge res: número de 256bits que receberá o resultado da soma
+  *				  huge dir: número de 256bits da direita
   *				  huge esq: número de 256bits da esquerda
   *
-  * Retorno     : huge result: número de 256bits resultante da operação de soma
+  * Retorno     : Nenhum
   */
-huge * soma(huge dir, huge esq);
+void soma(huge res, huge dir, huge esq);
 
  /*
   * Brief       : Executa a operação de diferença
@@ -174,12 +175,13 @@ huge * soma(huge dir, huge esq);
   * Descrição   : Executa a operação de diferença nos dois números passados
   *				  pela função chamadora
   *
-  * Parâmetros  : huge dir: número de 256bits da direita
+  * Parâmetros  : huge res: número de 256bits que receberá o resultado da subtração
+  *				  huge dir: número de 256bits da direita
   *				  huge esq: número de 256bits da esquerda
   *
-  * Retorno     : huge result: número de 256bits resultante da operação de diferença
+  * Retorno     : Nenhum
   */
-huge * subtrai(huge dir, huge esq);
+void subtrai(huge res, huge dir, huge esq);
 
  /*
   * Brief       : Executa a operação de multiplicação
@@ -187,12 +189,13 @@ huge * subtrai(huge dir, huge esq);
   * Descrição   : Executa a operação de multiplicação nos dois números passados
   *				  pela função chamadora
   *
-  * Parâmetros  : huge dir: número de 256bits da direita
+  * Parâmetros  : huge res: número de 256bits que receberá o resultado da multiplicação
+  *				  huge dir: número de 256bits da direita
   *				  huge esq: número de 256bits da esquerda
   *
-  * Retorno     : huge result: número de 256bits resultante da operação de multiplicação
+  * Retorno     : Nenhum
   */
-huge * multiplica(huge dir, huge esq);
+void multiplica(huge res, huge dir, huge esq);
 
  /*
   * Brief       : Executa a operação de divisao
@@ -200,12 +203,13 @@ huge * multiplica(huge dir, huge esq);
   * Descrição   : Executa a operação de divisao nos dois números passados
   *				  pela função chamadora
   *
-  * Parâmetros  : huge dir: número de 256bits da direita
+  * Parâmetros  : huge res: número de 256bits que receberá o resultado da divisão
+  *				  huge dir: número de 256bits da direita
   *				  huge esq: número de 256bits da esquerda
   *
-  * Retorno     : huge result: número de 256bits resultante da operação de divisao
+  * Retorno     : Nenhum
   */
-huge * divide(huge dir, huge esq);
+void divide(huge res, huge dir, huge esq);
 
 char *int2bin(uint32_t a);
 

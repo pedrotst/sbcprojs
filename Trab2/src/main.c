@@ -27,22 +27,14 @@ int main(int argc, char **argv){
     char num[79]; //maior numero de 255 bits tem tamanho 77, + sinal + \0
     strcpy(num, argv[1]); 
     init_huge(h);
-    printf("%d  %s\n", argc, argv[1]);
-    printf("%s \n", num );
+    
     str_to_huge(num, h);
-    printf("%s %s %s\n", int2bin(h[2]), int2bin(h[1]), int2bin(h[0]));
+    printf("Resultado 256bits\n");
+    printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n", int2bin(h[7]), int2bin(h[6]), int2bin(h[5]), int2bin(h[4]), int2bin(h[3]), int2bin(h[2]), int2bin(h[1]), int2bin(h[0]));
+    
     huge_to_str(h, num);
-    //printf("%" PRIu32, h[3]); // eu sei q eh estranho, mas eh assim q printa uint32_t
-    //printf("%" PRIu32, h[2]);
-    printf("%" PRIu32"\n", h[1]);
-    printf("%" PRIu32 "\n", h[0]);
-    printf("%s\n", num);
+    printf("Resultado em blocos de int\n");
+    printf("%s\n\n", num);
 
-    /* testing if functions works
-     * char *tst = ":;<=>?@ABC";
-    for(int i=0; i < strlen(tst); i++){
-        printf("%c\n", intochar(chtoi(tst[i])));
-    }
-    */
     return 0;
 }

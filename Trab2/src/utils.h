@@ -52,13 +52,17 @@ typedef struct pilhaString PilhaString;
   * Tipo definito para manipulação de número com 256bits
   */
 typedef uint32_t huge[8];
+ /*
+  * Tipo definito para manipulação de número com 256bits
+  */
+typedef uint32_t hugeType;
 
 /*
   * Estrutura da pilha de huges
   */
 struct pilha {
   int topo;
-  huge vet[N];
+  hugeType* vet[N];
 };
 
  /*
@@ -174,7 +178,7 @@ void push(Pilha* p, huge number);
   *
   * Retorno     : huge: número desempilhado tamanho 256bits
   */
-huge* pop(Pilha* p);
+hugeType* pop(Pilha* p);
 
 
  /*
@@ -250,6 +254,7 @@ void divide(huge res, huge esq, huge dir);
 char *int2bin(uint32_t a);
 
 PilhaString*    pilhaString_cria (void);
+Pilha*          pilha_cria (void);
 bool            pilhaString_vazia (PilhaString* p);
 void            pilhaString_libera (PilhaString* p);
 bool            isOperador(char* element);

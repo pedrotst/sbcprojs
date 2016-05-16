@@ -151,7 +151,6 @@ void infix_to_postfix(int* elements, char** infix, char*** pos){
     *elements = elementsSem;
 }
 
-
 PilhaString* pilhaString_cria (void) {
   PilhaString* p = (PilhaString*) malloc (sizeof(PilhaString));
 
@@ -316,4 +315,34 @@ void divide(huge res, huge esq, huge dir){
     memcpy(res, counter, 32);
 
     return;
+}
+
+void push (Pilha* p, huge v) {
+  if (p->topo == N) {
+    printf ("\nCapacidade esgotada!\n");
+    printf ("Seu programa sera abortado\n");
+    exit (1);
+  }
+
+  p->vet[p->topo] = v;
+  p->topo++;
+}
+
+hugeType* pop (Pilha* p) {
+  if (p->topo <= 0) {
+    printf ("\nPilha vazia! Nao ha o qu deletar.\n");
+    printf ("Seu programa sera abortado\n");
+    exit (1);
+  }
+
+  hugeType *v = p->vet[p->topo - 1];
+  p->topo--;
+  return v;
+}
+
+Pilha* pilha_cria (void) {
+  Pilha* p = (Pilha*) malloc (sizeof(Pilha));
+
+  p->topo = 0;
+  return p;
 }

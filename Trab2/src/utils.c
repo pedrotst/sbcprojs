@@ -180,3 +180,27 @@ void multiplica(huge res, huge esq, huge dir) {
 
       return;
 }
+
+void divide(huge res, huge esq, huge dir){
+    huge counter = {0}, zero = {0}, one = {0}, tmp = {0};
+
+    // Garantindo que o res está com 0
+    init_huge(res);
+
+    // inicializando o huge com 1
+    one[7] = 1;
+
+    // copia o número em que faremos as sucessivas subtrações
+    // para um huge temporário
+    memcpy(tmp, esq, 32);
+
+    // faz sucessivas subtrações do número direito no esquerdo
+    for(init_huge(counter); !(memcmp(tmp, dir, 32) < 0) ; soma(counter, counter, one)){
+        subtrai(tmp, tmp, dir);
+    }
+
+    // a quantidade de subtrações necessárias é igual ao counter
+    memcpy(res, counter, 32);
+
+    return;
+}

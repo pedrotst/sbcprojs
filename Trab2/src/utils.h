@@ -28,11 +28,43 @@
 #include <inttypes.h>
 #include <math.h>
 #include <string.h>
+#include <stdbool.h>
+
+ /*
+  * Tamanho da pilha de strings
+  */
+#define N 100
+
+/*
+  * Estrutura da pilha de strings
+  */
+struct pilhaString {
+  int topo;
+  char* vet[N];
+};
+
+ /*
+  * Tipo definito para pilha de strings
+  */
+typedef struct pilhaString PilhaString;
 
  /*
   * Tipo definito para manipulação de número com 256bits
   */
 typedef uint32_t huge[8];
+
+/*
+  * Estrutura da pilha de huges
+  */
+struct pilha {
+  int topo;
+  huge vet[N];
+};
+
+ /*
+  * Tipo definito para pilha de huges
+  */
+typedef struct pilha Pilha;
 
  /*
   * Brief       : Inicializa o número huge
@@ -112,11 +144,13 @@ void huge_to_str(huge h, char *num);
   *
   * Descrição   : Converte notação infixa para pós-fixa
   *
-  * Parâmetros  : char *infix: string com a operação infixa
+  * Parâmetros  : int* elements: endereço da quantidade de elementos que existem na expressao pos-fixa
+  *               char **infix: lista de strings representa a expressao pre-fixa
+  *               char ***saida: endereço da expressao pos-fixa
   *
-  * Retorno     : char *posfix: string com a operação pós-fix
+  * Retorno     : Nenhum
   */
-char * infix_to_postfix(char *infix);
+void infix_to_postfix(int* elements, char **infix, char*** saida);
  // lembrar de incluir a prioridade dos parênteses
 
  /*
@@ -124,22 +158,23 @@ char * infix_to_postfix(char *infix);
   *
   * Descrição   : Empilha um número tipo huge na pilha
   *
-  * Parâmetros  : huge number: número de tamanho 256bits
+  * Parâmetros  : Pilha* p: ponteiro para a pilha
+  *               huge number: número de tamanho 256bits
   *
   * Retorno     : Nenhum
   */
-void push(huge number);
+void push(Pilha* p, huge number);
 
  /*
   * Brief       : Desempilha um número
   *
   * Descrição   : Desempilha um número tipo huge da pilha
   *
-  * Parâmetros  : Nenhum
+  * Parâmetros  : Pilha* p: ponteiro para a pilha de huges
   *
   * Retorno     : huge: número desempilhado tamanho 256bits
   */
-huge * pop(void);
+huge* pop(Pilha* p);
 
 
  /*
@@ -208,5 +243,15 @@ huge * multiplica(huge dir, huge esq);
 huge * divide(huge dir, huge esq);
 
 char *int2bin(uint32_t a);
+
+PilhaString*    pilhaString_cria (void);
+bool            pilhaString_vazia (PilhaString* p);
+void            pilhaString_libera (PilhaString* p);
+bool            isOperador(char* element);
+void            pushString (PilhaString* p, char* v);
+char*           popString (PilhaString* p);
+char*           topString (PilhaString* p);
+
+int prioridade(char* c);
 
  #endif /* _UTILS_H_ */

@@ -99,3 +99,115 @@ char *int2bin(uint32_t a){
  }
  return tmp;
 }
+
+void infix_to_postfix(int* elements, char** infix, char*** pos){
+    PilhaString* p = pilhaString_cria();
+    int saidaHelp = 0;
+    int qntElements = 1;
+    int elementsSem = *elements;
+
+    for (int i = 1; i <= *elements; ++i) {
+        if(isOperador(infix[i])){
+            while(topString(p) != NULL && (prioridade(topString(p)) >= prioridade(infix[i]))){
+                qntElements++;
+                *pos = (char**) realloc(*pos, (saidaHelp+1)*sizeof(char*));
+                (*pos)[saidaHelp] = (char*) malloc(strlen(topString(p))*(sizeof(char)));
+                strcpy((*pos)[saidaHelp],popString(p));
+                saidaHelp++;
+            }
+            pushString(p,infix[i]);
+        } else if(strcmp("(",infix[i]) == 0){
+            elementsSem--;
+            pushString(p,infix[i]);
+        } else if(strcmp(")",infix[i]) == 0){
+            elementsSem--;
+            while(!pilhaString_vazia(p) && strcmp("(",topString(p)) != 0){
+                qntElements++;
+                *pos = (char**) realloc(*pos, (saidaHelp+1)*sizeof(char*));
+                (*pos)[saidaHelp] = (char*) malloc(strlen(topString(p))*(sizeof(char)));
+                strcpy((*pos)[saidaHelp],popString(p));
+                saidaHelp++;
+            }
+            popString(p);
+        } else{
+            qntElements++;
+            *pos = (char**) realloc(*pos, (saidaHelp+1)*sizeof(char*));
+            (*pos)[saidaHelp] = (char*) malloc(strlen(infix[i])*(sizeof(char)));
+            strcpy((*pos)[saidaHelp],infix[i]);
+            saidaHelp++;
+        }
+    }
+
+    while(!pilhaString_vazia(p)){
+        qntElements++;
+        *pos = (char**) realloc(*pos, (saidaHelp+1)*sizeof(char*));
+        (*pos)[saidaHelp] = (char*) malloc(strlen(topString(p))*(sizeof(char)));
+        strcpy((*pos)[saidaHelp], popString(p));
+        saidaHelp++;   
+    }
+
+    *elements = elementsSem;
+}
+
+
+PilhaString* pilhaString_cria (void) {
+  PilhaString* p = (PilhaString*) malloc (sizeof(PilhaString));
+
+  p->topo = 0;
+  return p;
+}
+
+bool isOperador(char* element){
+    if(strcmp(element,"+") == 0 || strcmp(element,"-") == 0 || strcmp(element,"x") == 0 || strcmp(element,"/") == 0){
+        return true;
+    }
+    return false;
+}
+
+void pushString (PilhaString* p, char* v) {
+  if (p->topo == N) {
+    printf ("\nCapacidade esgotada!\n");
+    printf ("Seu programa sera abortado\n");
+    exit (1);
+  }
+
+  p->vet[p->topo] = v;
+  p->topo++;
+}
+
+char* popString (PilhaString* p) {
+  if (p->topo <= 0) {
+    printf ("\nPilha vazia! Nao ha o qu deletar.\n");
+    printf ("Seu programa sera abortado\n");
+    exit (1);
+  }
+
+  char* v = p->vet[p->topo - 1];
+  p->topo--;
+  return v;
+}
+
+char* topString (PilhaString* p) {
+    if (p->topo <= 0) {
+        return NULL;
+    }
+
+    char* v = p->vet[p->topo - 1];
+    return v;
+}
+
+bool pilhaString_vazia (PilhaString* p) {
+  if (p->topo <= 0)
+    return true;
+  else
+    return false;
+}
+
+int prioridade(char* caracter){
+    if(strcmp("+",caracter) == 0 || strcmp("-",caracter) == 0){
+        return 1;
+    } else if(strcmp("x",caracter) == 0 || strcmp("/",caracter) == 0){
+        return 2;
+    }
+    return 0;
+}

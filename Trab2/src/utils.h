@@ -184,7 +184,7 @@ hugeType* pop(Pilha* p);
  /*
   * Brief       : Executa a operação
   *
-  * Descrição   : Executa a operação definida pelo operador passado 
+  * Descrição   : Executa a operação definida pelo operador passado
   *				  nos dois últimos números da pilha e empilha o resultado
   *
   * Parâmetros  : char operador: operador
@@ -250,6 +250,10 @@ void multiplica(huge res, huge esq, huge dir);
   * Retorno     : Nenhum
   */
 void divide(huge res, huge esq, huge dir);
+
+int shift_left_31(huge res, huge operand, uint32_t n);
+
+int shift_left_255(huge res, huge operand, uint32_t n);
 
 char *int2bin(uint32_t a);
 

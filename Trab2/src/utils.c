@@ -145,7 +145,7 @@ void infix_to_postfix(int* elements, char** infix, char*** pos){
         *pos = (char**) realloc(*pos, (saidaHelp+1)*sizeof(char*));
         (*pos)[saidaHelp] = (char*) malloc(strlen(topString(p))*(sizeof(char)));
         strcpy((*pos)[saidaHelp], popString(p));
-        saidaHelp++;   
+        saidaHelp++;
     }
 
     *elements = elementsSem;
@@ -345,4 +345,53 @@ Pilha* pilha_cria (void) {
 
   p->topo = 0;
   return p;
+}
+
+// Shifta um huge n casas para a esquerda. n pode ser no máximo 31.
+int shift_left_31(huge res, huge operand, uint32_t n) {
+      huge aux_res = {0};
+      uint32_t aux = 0;
+      int i = 0;
+
+      // Se o shift deslocar 256 casas ou mais, o resultado é 0.
+      if (n >= 32) {
+            init_huge(operand);
+            return 0;
+      }
+
+
+      // Esse loop funciona para shifts de até 31 bits;
+      for (i = 7; i >= 0; i--) {
+            // Shifta o int para a esquera e coloca os bits originados do int
+            // anterior mais a direita.
+            aux_res[i] = operand[i] << n | aux;
+            // Salva os bits mais a esquerda que serão passados para o próximo int.
+            aux = operand[i] >> (32 - n);
+      }
+
+      memcpy(res, aux_res, 32);
+
+      return 1;
+}
+
+// Shifta um huge n casas para a esquerda. n pode ser no máximo 255.
+int shift_left_255(huge res, huge operand, uint32_t n) {
+      uint32_t aux = 0;
+      int i = 0;
+
+      // Se o shift deslocar 256 casas ou mais, o resultado é 0.
+      if (n >= 256) {
+            init_huge(operand);
+            return 0;
+      }
+
+      memcpy(res, operand, 32);
+
+      for (i = 0; i < n/31; i++)
+            shift_left_31(res, res, 31);
+
+
+      shift_left_31(res, res, (n%31));
+
+      return 1;
 }

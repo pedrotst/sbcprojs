@@ -47,20 +47,55 @@ int main(int argc, char **argv){
         tokens = argv;
     }
     infix_to_postfix(&qntElementos, tokens, &pos);
-
-    for (int i = 0; i < qntElementos; ++i) {
-        printf("%s\n", pos[i]);
-    }
-
     Pilha* p = pilha_cria();
 
-    str_to_huge(pos[0], h);
+    for (int i = 0; i < qntElementos; ++i) {
+        printf("Processando: %s\n", pos[i]);
+        if(!isOperador(pos[i])){
+          huge h;
+          str_to_huge(pos[i], h);
+          push(p, h);
+        }
+        else{
+            hugeType *esq, *dir;
+            huge resp;
+            esq = pop(p);
+            dir = pop(p);
+            switch (pos[i][0]){
+            case '+':
+                soma(resp, esq, dir);
+                break;
+            case '-':
+                subtrai(resp, esq, dir);
+                break;
+            case 'x':
+                multiplica(resp, esq, dir);
+                break;
+            case '/':
+                divide(resp, esq, dir);
+                break;
+            }
+            push(p, resp);
+        }
+    }
 
-    printf("huge: %s\n", int2bin(h[7]));
-    push(p,h);
+
+
+
+
+
+    //printf("huge: %s\n", int2bin(h[7]));
+    //push(p,h);
     hugeType *h1 = pop(p);
-    printf("%s\n", int2bin(h1[7]));
-
+    //printf("%s\n", int2bin(h1[7]));
+    printf("0: %05x\n", h1[0]);
+    printf("1: %05x\n", h1[1]);
+    printf("2: %05x\n", h1[2]);
+    printf("3: %05x\n", h1[3]);
+    printf("4: %05x\n", h1[4]);
+    printf("5: %05x\n", h1[5]);
+    printf("6: %05x\n", h1[6]);
+    printf("7: %05x\n", h1[7]);
     return 0;
 
     // huge operand1 = {0}, operand2 = {0}, res_h = {0};

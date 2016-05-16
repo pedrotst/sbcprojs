@@ -63,14 +63,17 @@ int main(int argc, char **argv){
 
     return 0;
 
-    // huge operand1 = {0}, operand2 = {0}, res_h = {0};
-    // char res_string[79], num[79];
-    //
-    // strcpy(num, argv[1]);
-    // str_to_huge(num, operand1);
-    // //str_to_huge(argv[2], operand2);
-    // shift_left_255(res_h, operand1, 1);
-    // huge_to_hex(res_h, res_string);
-    // printf("%s\n", res_string);
+
+      // huge operand1 = {0}, operand2 = {0}, res_h = {0};
+      // char res_string[79], num[79];
+      //
+      // strcpy(num, argv[1]);
+      // str_to_huge(num, operand1);
+      // str_to_huge(argv[2], operand2);
+      // multiplica(res_h, operand1, operand2);
+      // huge_to_hex(res_h, res_string);
+      // printf("%s\n", res_string);
+      //
+      // return 0;
 
 }

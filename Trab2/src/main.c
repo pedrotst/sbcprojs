@@ -40,7 +40,8 @@ int main(int argc, char **argv){
         tokens[1] = strtok(exp , delim);
         for(i=1; *(tokens+i); i++)
             tokens[i + 1] = strtok(NULL , delim);
-        qntElementos = i-2;
+        qntElementos = i-1;
+        tokens[i-1][strlen(tokens[i-1]) - 1] = '\0'; // tira o \n de forma porca, confesso
     }
     else{
         tokens = argv;

@@ -43,8 +43,8 @@ int nilstring(char *str, int len){
 }
 
 void str_to_huge(char* num, huge h){ // len(str) == 79
-    char divided_num[79];
-    int aux, len, i, j=0, k=0;
+    char divided_num[79] = {0};
+    int aux, len, i, j=0, k=7;
     init_huge(h);
 
     num[78] = 0;
@@ -60,16 +60,16 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
         }
         // grava o número em bits no array huge
         divided_num[i] = '\0';
-        
-        if(num[i] != '\0') 
+
+        if(num[i] != '\0')
            h[k] += 1 << j;
 
         j++;
-        
+
         // trata o overflow andando no array huge
         if(j == 32)
-            j = 0, k++;
-        
+            j = 0, k--;
+
         // copia o resto da divisão para num, e continua dividindo a partir daí
         strcpy(num, divided_num);
         len = strlen(num);
@@ -77,9 +77,11 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
 }
 
 void huge_to_str(huge h, char *num){
-   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[3], h[2], h[1], h[0]);
+   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
 }
 
+
+///////// DELETAR ANTES DE ENVIAR PELAMORDEDEUS
 char *int2bin(uint32_t a){
  char *str,*tmp;
  int cnt = 31;
@@ -210,4 +212,108 @@ int prioridade(char* caracter){
         return 2;
     }
     return 0;
+}
+
+/////////
+
+/*void operacao(char operador, huge res){
+    // declara e inicializa os operandos
+    huge esq = {0};
+    huge dir = {0};
+
+    // desempilha os operandos da pilha
+    esq = pop();
+    dir = pop();
+
+    switch(operador){
+        case '+': soma(res, dir, esq);
+                  break;
+        case '-': subrai(res, dir, esq);
+                  break;
+        case '*': multiplica(res, dir, esq);
+                  break;
+        case '/': divide(res, dir, esq);
+                  break;
+    }
+}*/
+
+void soma(huge res, huge esq, huge dir) {
+      uint32_t bit1 = 0, bit2 = 0, sum_bit = 0;
+      int32_t i = 0, shift = 0;
+      uint32_t overflow = 0;
+      huge aux_res = {0};
+
+      for (i = 7; i >= 0; i--) {
+            for (shift = 0; shift < 32; shift++) {
+                  bit1 = esq[i] >> shift & 0x00000001;
+                  bit2 = dir[i] >> shift & 0x00000001;
+                  sum_bit = bit1 ^ bit2 ^ overflow;
+                  overflow = (bit1 & bit2) | (bit1 & overflow) | (bit2 & overflow);
+                  aux_res[i] = aux_res[i] | (sum_bit << shift);
+            }
+      }
+
+      memcpy(res, aux_res, 32);
+
+      return;
+}
+
+void subtrai(huge res, huge esq, huge dir){
+    int i;
+    // recebe a negação do segundo operando
+    huge inverte = {0};
+
+    huge um = {0};
+    huge sub = {0};
+
+    for(i = 7; i >= 0; i--){
+        inverte[i] = ~dir[i];
+    }
+
+    um[7] = 1;
+
+    // soma 1 do complemento a dois
+    soma(sub, inverte, um);
+
+    // faz a soma com o resultado do complemento a dois
+    soma(res, sub, esq);
+}
+
+void multiplica(huge res, huge esq, huge dir) {
+      huge counter = {0}, one = {0};
+
+      // Garantindo que o res está com 0.
+      init_huge(res);
+
+      // Inicializando o huge com 1.
+      one[7] = 1;
+
+      for (init_huge(counter) ; memcmp(dir, counter, 32); soma(counter, counter, one))
+            soma(res, res, esq);
+
+      return;
+}
+
+void divide(huge res, huge esq, huge dir){
+    huge counter = {0}, zero = {0}, one = {0}, tmp = {0};
+
+    // Garantindo que o res está com 0
+    init_huge(res);
+
+    // inicializando o huge com 1
+    one[7] = 1;
+
+    // copia o número em que faremos as sucessivas subtrações
+    // para um huge temporário
+    memcpy(tmp, esq, 32);
+
+    // faz sucessivas subtrações do número direito no esquerdo
+    for(init_huge(counter); !(memcmp(tmp, dir, 32) < 0) ; soma(counter, counter, one)){
+        subtrai(tmp, tmp, dir);
+    }
+
+    // a quantidade de subtrações necessárias é igual ao counter
+    memcpy(res, counter, 32);
+
+    return;
 }

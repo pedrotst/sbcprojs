@@ -77,9 +77,12 @@ void str_to_huge(char* num, huge h){ // len(str) == 79
 }
 
 void huge_to_str(huge h, char *num){
-   sprintf(num, "%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32"%10"PRIu32, h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
+   sprintf(num, "%11"PRIu32"%11"PRIu32"%11"PRIu32"%11"PRIu32"%11"PRIu32"%11"PRIu32"%11"PRIu32"%11"PRIu32, h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
 }
 
+void huge_to_hex(huge h, char *num){
+   sprintf(num, "%11x""%11x""%11x""%11x""%11x""%11x""%11x""%11x", h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
+}
 
 ///////// DELETAR ANTES DE ENVIAR PELAMORDEDEUS
 char *int2bin(uint32_t a){
@@ -277,6 +280,21 @@ void subtrai(huge res, huge esq, huge dir){
     // faz a soma com o resultado do complemento a dois
     soma(res, sub, esq);
 }
+
+// void multiplica(huge res, huge esq, huge dir) {
+//       huge counter = {0}, one = {0};
+//
+//       // Garantindo que o res está com 0.
+//       init_huge(res);
+//
+//       // Inicializando o huge com 1.
+//       one[7] = 1;
+//
+//       for (init_huge(counter) ; memcmp(dir, counter, 32); soma(counter, counter, one))
+//             soma(res, res, esq);
+//
+//       return;
+// }
 
 void multiplica(huge res, huge esq, huge dir) {
       huge counter = {0}, one = {0};

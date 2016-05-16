@@ -143,6 +143,8 @@ void str_to_huge(char* num, huge h);
   */
 void huge_to_str(huge h, char *num);
 
+void huge_to_hex(huge h, char *num);
+
  /*
   * Brief       : Converte notação infixa para pós-fixa
   *

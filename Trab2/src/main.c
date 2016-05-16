@@ -26,7 +26,26 @@ int main(int argc, char **argv){
     huge h;
     init_huge(h);
     char** pos = (char**) malloc(sizeof(char*));
-    infix_to_postfix(&qntElementos, argv, &pos);
+    char exp[9999];
+    const char delim[2] = " ";
+    char** tokens = (char**) malloc(sizeof(char*));
+
+    if(qntElementos < 1){
+        int i;
+        printf("Insira a expressao a ser avaliada: ");
+        fgets(exp, 9999, stdin);
+        printf("%s", exp);
+
+        tokens[0] = argv[0];
+        tokens[1] = strtok(exp , delim);
+        for(i=1; *(tokens+i); i++)
+            tokens[i + 1] = strtok(NULL , delim);
+        qntElementos = i-2;
+    }
+    else{
+        tokens = argv;
+    }
+    infix_to_postfix(&qntElementos, tokens, &pos);
 
     for (int i = 0; i < qntElementos; ++i) {
         printf("%s\n", pos[i]);

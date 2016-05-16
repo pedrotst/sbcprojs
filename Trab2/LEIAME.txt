@@ -22,7 +22,7 @@ Descrição: Este programa tem como objetivo a codificação ou decodificação 
 
 ==============================================================
 
-ATENÇÃO: Este programa foi desenvolvido e testado nas plataformas windows e linux
+ATENÇÃO: Este programa foi desenvolvido e testado nas plataformas windows, linux e mac.
 
 ==============================================================
 
@@ -48,3 +48,97 @@ De forma que:
 
 
 OBS: Caso não sejam passados parâmetros por linha de comando, o programa irá solicitar as entradas novamente
+
+==============================================================
+
+Primeiramente, os nossos números de 256 bits foram definidos como arrays de 8
+inteiros sem sinal, de 32 bits cada.
+typedef uint32_t huge[8];
+
+As operações aritméticas foram implementadas da seguinte forma:
+1 - Soma: void soma(huge res, huge esq, huge dir)
+      Na soma são passados dois números de 256 bits (esq e dir) e o resultado (res),
+      também de 256 bits.
+      A soma foi feita bit a bit, sendo que cada bit dos operandos era isolado
+      através de shifts e mascaramentos e então eram calculados a soma e o overflow
+      para esse bit. As linhas a seguir mostram o isolamento, o calculo da soma e
+      do overflow:
+            Isolamento do bit:
+            bit1 = esq[i] >> shift & 0x00000001;
+
+            Soma:
+            sum_bit = bit1 ^ bit2 ^ overflow;
+
+            Overflow:
+            overflow = (bit1 & bit2) | (bit1 & overflow) | (bit2 & overflow);
+
+      Depois disso os bits eram escritos um a um no resultado.
+            aux_res[i] = aux_res[i] | (sum_bit << shift);
+
+2 - Subtração: void subtrai(huge res, huge esq, huge dir)
+      Na subtração são passados dois números de 256 bits (esq e dir) e o resultado (res),
+      também de 256 bits.
+      Nela, nós tiramos proveito da representação em complemento de dois. Primeiro
+      nós pegavamos o operando da direita (dir) e passavamos ele para complemento de
+      dois. Depois disso aplicavamos a soma de 256 bits. Abaixo mostramos o processo
+      de passar para complemento de 2.
+            Negando o array de ints:
+            for(i = 7; i >= 0; i--){
+                inverte[i] = ~dir[i];
+            }
+
+            Somando 1:
+            soma(sub, inverte, um);
+
+            Aplicando a subtração através da soma:
+            soma(res, sub, esq);
+
+3 - Multiplicação: multiplica(huge res, huge esq, huge dir);
+      Na multiplicação são passados dois números de 256 bits (esq e dir) e o resultado (res),
+      também de 256 bits.
+      Nela o processo utilizado foi o deslocamento de um dos operandos, bit a bit,
+      sua multiplicação pelo bit (ou 0 ou 1) correspondente do outro operando e a soma
+      de todos esses deslocamentos. O processo fica mais simples de entender com um
+      exemplo:
+                             00111010
+                           x 00100111
+                             --------
+                             00111010
+      soma de todos         00111010
+      os resultados        00111010
+                        00111010
+                        -------------
+                        0100011010110
+
+      Para que a multiplicação fosse feita nessa forma, foi necessário criar
+      uma função que executa shifts em números de 256 bits:
+      // Shifta um huge n casas para a esquerda.
+      int shift_left_255(huge res, huge operand, uint32_t n);
+
+      As linhas abaixo dão uma visão geral do código:
+            Shift do multiplicando:
+            shift_left_255(aux_res, esq, 255 - n);
+
+            Obtenção do bit do multiplicador que diz se esse deslocamento será
+            somado ou não:
+            bit_mul = dir[n/32] >> (31 - n%32) & 0x00000001;
+
+            Se o bit_mul for zero, o número deslocado é zerado:
+            if (bit_mul == 0)
+                  init_huge(aux_res);    //zera aux_res
+
+            O multiplicando deslocado é adicionado ou resultado:
+            soma(res, res, aux_res);
+
+4 - Divisão: void divide(huge res, huge esq, huge dir);
+      Devido a falta de tempo, a divisão foi implementada de forma mais simples e
+      e menos eficiente. Nela o processo foi retirar sucessivamente, dentro de um
+      loop for, o valor do divisor do dividendo. Ao final o contador do for possui
+      o valor da divisão. Visão do código:
+            Subtração sucessiva:
+            for(init_huge(counter); !(memcmp(tmp, dir, 32) < 0) ; soma(counter, counter, one)){
+                subtrai(tmp, tmp, dir);
+            }
+
+            Cópia do resultado (counter) para a saída (res):
+            memcpy(res, counter, 32);

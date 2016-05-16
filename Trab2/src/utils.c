@@ -297,16 +297,18 @@ void subtrai(huge res, huge esq, huge dir){
 // }
 
 void multiplica(huge res, huge esq, huge dir) {
-      huge counter = {0}, one = {0};
+      huge aux_res = {0};
+      int bit_mul = 0, n = 0;
 
-      // Garantindo que o res está com 0.
-      init_huge(res);
+      for (n = 255; n >= 0 ; n--) {
+            shift_left_255(aux_res, esq, 255 - n);
 
-      // Inicializando o huge com 1.
-      one[7] = 1;
+            bit_mul = dir[n/32] >> (31 - n%32) & 0x00000001;
+            if (bit_mul == 0)
+                  init_huge(aux_res);
 
-      for (init_huge(counter) ; memcmp(dir, counter, 32); soma(counter, counter, one))
-            soma(res, res, esq);
+            soma(res, res, aux_res);
+      }
 
       return;
 }

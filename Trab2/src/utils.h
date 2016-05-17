@@ -157,7 +157,6 @@ void huge_to_hex(huge h, char *num);
   * Retorno     : Nenhum
   */
 void infix_to_postfix(int* elements, char **infix, char*** saida);
- // lembrar de incluir a prioridade dos parênteses
 
  /*
   * Brief       : Empilha um número
@@ -182,7 +181,6 @@ void push(Pilha* p, huge number);
   */
 hugeType* pop(Pilha* p);
 
-
  /*
   * Brief       : Executa a operação
   *
@@ -195,7 +193,6 @@ hugeType* pop(Pilha* p);
   * Retorno     : Nenhum
   */
 void operacao(char operador, huge res);
-// essa função deve conter um switch comm o operador que direcionará para a operação
 
  /*
   * Brief       : Executa a operação de soma
@@ -256,8 +253,6 @@ void divide(huge res, huge esq, huge dir);
 int shift_left_31(huge res, huge operand, uint32_t n);
 
 int shift_left_255(huge res, huge operand, uint32_t n);
-
-char *int2bin(uint32_t a);
 
 PilhaString*    pilhaString_cria (void);
 Pilha*          pilha_cria (void);

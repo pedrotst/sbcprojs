@@ -79,15 +79,8 @@ int main(int argc, char **argv){
         }
     }
 
-
-
-
-
-
-    //printf("huge: %s\n", int2bin(h[7]));
-    //push(p,h);
     hugeType *h1 = pop(p);
-    //printf("%s\n", int2bin(h1[7]));
+
     printf("0: %05x\n", h1[0]);
     printf("1: %05x\n", h1[1]);
     printf("2: %05x\n", h1[2]);
@@ -96,19 +89,6 @@ int main(int argc, char **argv){
     printf("5: %05x\n", h1[5]);
     printf("6: %05x\n", h1[6]);
     printf("7: %05x\n", h1[7]);
+
     return 0;
-
-
-      // huge operand1 = {0}, operand2 = {0}, res_h = {0};
-      // char res_string[79], num[79];
-      //
-      // strcpy(num, argv[1]);
-      // str_to_huge(num, operand1);
-      // str_to_huge(argv[2], operand2);
-      // multiplica(res_h, operand1, operand2);
-      // huge_to_hex(res_h, res_string);
-      // printf("%s\n", res_string);
-      //
-      // return 0;
-
 }

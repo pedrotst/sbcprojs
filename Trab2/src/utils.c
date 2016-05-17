@@ -84,27 +84,6 @@ void huge_to_hex(huge h, char *num){
    sprintf(num, "%11x""%11x""%11x""%11x""%11x""%11x""%11x""%11x", h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
 }
 
-///////// DELETAR ANTES DE ENVIAR PELAMORDEDEUS
-char *int2bin(uint32_t a){
- char *str,*tmp;
- int cnt = 31;
- str = (char *) malloc(33); /*32 + 1 , because its a 32 bit bin number*/
- tmp = str;
- while ( cnt > -1 ){
-      str[cnt]= '0';
-      cnt --;
- }
- cnt = 31;
- while (a > 0){
-       if (a%2==1){
-           str[cnt] = '1';
-        }
-      cnt--;
-        a = a/2 ;
- }
- return tmp;
-}
-
 void infix_to_postfix(int* elements, char** infix, char*** pos){
     PilhaString* p = pilhaString_cria();
     int saidaHelp = 0;

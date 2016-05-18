@@ -195,29 +195,6 @@ int prioridade(char* caracter){
     return 0;
 }
 
-/////////
-
-/*void operacao(char operador, huge res){
-    // declara e inicializa os operandos
-    huge esq = {0};
-    huge dir = {0};
-
-    // desempilha os operandos da pilha
-    esq = pop();
-    dir = pop();
-
-    switch(operador){
-        case '+': soma(res, dir, esq);
-                  break;
-        case '-': subrai(res, dir, esq);
-                  break;
-        case '*': multiplica(res, dir, esq);
-                  break;
-        case '/': divide(res, dir, esq);
-                  break;
-    }
-}*/
-
 void soma(huge res, huge esq, huge dir) {
       uint32_t bit1 = 0, bit2 = 0, sum_bit = 0;
       int32_t i = 0, shift = 0;
@@ -259,21 +236,6 @@ void subtrai(huge res, huge esq, huge dir){
     // faz a soma com o resultado do complemento a dois
     soma(res, sub, esq);
 }
-
-// void multiplica(huge res, huge esq, huge dir) {
-//       huge counter = {0}, one = {0};
-//
-//       // Garantindo que o res está com 0.
-//       init_huge(res);
-//
-//       // Inicializando o huge com 1.
-//       one[7] = 1;
-//
-//       for (init_huge(counter) ; memcmp(dir, counter, 32); soma(counter, counter, one))
-//             soma(res, res, esq);
-//
-//       return;
-// }
 
 void multiplica(huge res, huge esq, huge dir) {
       huge aux_res = {0};

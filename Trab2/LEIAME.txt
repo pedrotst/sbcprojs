@@ -4,7 +4,7 @@ Departamento de Ciência da Computação
 
 Software Básico - Turma A - 1/2016
 
-Codificadores Binários
+Máquina de Pilha e aritmética via software
 
 Grupo 3:
   - Carlos Joel Tavares da Silva  13/0007293
@@ -16,40 +16,40 @@ Grupo 3:
 READ ME
 
 Copyright © 2016 UnB. All rights reserved.
-==============================================================
+=====================================================================================
 
-Descrição: Este programa tem como objetivo a codificação ou decodificação de dados arquivos de entrada em diversos formatos para arquivos codificados em Base 62, Base 64, Base 85, e Base 91. Além disso, segue o padrão C99.
+Descrição: Este programa tem como objetivo realizar as quatro operações aritméticas
+           básicas utilizando números inteiros de 256 bits, além de ser implementado
+           utilizando máquina de pilha. Além disso, segue o padrão C99.
 
-==============================================================
+=====================================================================================
 
 ATENÇÃO: Este programa foi desenvolvido e testado nas plataformas windows, linux e mac.
 
-==============================================================
+=====================================================================================
 
 COMPILAÇÃO
 Para compilar esse programa utilizando o terminal a partir da raiz do projeto execute:
-$ make all
+$ make
 
 EXECUÇÃO
 Para executar esse programa utilizando o terminal a partir da raiz do projeto execute:
-$ ./main.exe { -e | -d | -h } { -b62 | -b64 | -b85 | -b91 } {arquivo de entrada} {arquivo de saida}
+$ ./main { { ( } operando_1 { + | - | x | / } operando_2 { ) } }
 
 De forma que:
-{ -e | -d | -h }
--e Caso queira codificar o arquivo
--d Caso queira decodificar o arquivo
--h Abrir o menu de ajuda
+{ { ( } operando_1 { + | - | x | / } operando_2 { ) } } representa uma operação
 
-{ -b62 | -b64 | -b85 | -b91 }
--b62 A base utilizada sera a base 62.
--b64 A base utilizada sera a base 64.
--b85 A base utilizada sera a base 85.
--b91 A base utilizada sera a base 91.
+operando_1 e operando_2 são números inteiros ou uma outra operação
+
+{ + | - | x | / } é um caracter que representa uma das operações aritméticas
+
+{ ( } e { ) } são parênteses opcionais para definir prioridade de operações
 
 
-OBS: Caso não sejam passados parâmetros por linha de comando, o programa irá solicitar as entradas novamente
+OBS: Caso não sejam passados parâmetros por linha de comando, o programa irá
+     solicitar as entradas novamente.
 
-==============================================================
+=====================================================================================
 
 Primeiramente, os nossos números de 256 bits foram definidos como arrays de 8
 inteiros sem sinal, de 32 bits cada.

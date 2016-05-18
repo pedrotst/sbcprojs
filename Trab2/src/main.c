@@ -49,16 +49,17 @@ int main(int argc, char **argv){
     infix_to_postfix(&qntElementos, tokens, &pos);
     Pilha* p = pilha_cria();
 
+    uint32_t *h2;
     for (int i = 0; i < qntElementos; ++i) {
         printf("Processando: %s\n", pos[i]);
         if(!isOperador(pos[i])){
-          huge h;
-          str_to_huge(pos[i], h);
-          push(p, h);
+          h2 = malloc(8*sizeof(uint32_t));
+          str_to_huge(pos[i], h2);
+          push(p, h2);
         }
         else{
             hugeType *esq, *dir;
-            huge resp;
+            huge resp = {0};
             esq = pop(p);
             dir = pop(p);
             switch (pos[i][0]){
@@ -66,13 +67,13 @@ int main(int argc, char **argv){
                 soma(resp, esq, dir);
                 break;
             case '-':
-                subtrai(resp, esq, dir);
+                subtrai(resp, dir, esq);
                 break;
             case 'x':
                 multiplica(resp, esq, dir);
                 break;
             case '/':
-                divide(resp, esq, dir);
+                divide(resp, dir, esq);
                 break;
             }
             push(p, resp);
@@ -81,14 +82,15 @@ int main(int argc, char **argv){
 
     hugeType *h1 = pop(p);
 
-    printf("0: %05x\n", h1[0]);
-    printf("1: %05x\n", h1[1]);
-    printf("2: %05x\n", h1[2]);
-    printf("3: %05x\n", h1[3]);
-    printf("4: %05x\n", h1[4]);
-    printf("5: %05x\n", h1[5]);
-    printf("6: %05x\n", h1[6]);
-    printf("7: %05x\n", h1[7]);
+    printf("Saída em hexa.\n");
+    printf("0 ((2^32)^7): %05x\n", h1[0]);
+    printf("1 ((2^32)^6): %05x\n", h1[1]);
+    printf("2 ((2^32)^5): %05x\n", h1[2]);
+    printf("3 ((2^32)^4): %05x\n", h1[3]);
+    printf("4 ((2^32)^3): %05x\n", h1[4]);
+    printf("5 ((2^32)^2): %05x\n", h1[5]);
+    printf("6 ((2^32)^1): %05x\n", h1[6]);
+    printf("7 ((2^32)^0): %05x\n", h1[7]);
 
     return 0;
 }

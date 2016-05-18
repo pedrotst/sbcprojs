@@ -365,7 +365,10 @@ int shift_left_31(huge res, huge operand, uint32_t n) {
             // anterior mais a direita.
             aux_res[i] = operand[i] << n | aux;
             // Salva os bits mais a esquerda que serão passados para o próximo int.
-            aux = operand[i] >> (32 - n);
+            if (n == 0)
+                  aux = 0;
+            else
+                  aux = operand[i] >> (32 - n);
       }
 
       memcpy(res, aux_res, 32);
